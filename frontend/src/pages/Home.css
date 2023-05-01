@@ -1,0 +1,10 @@
+:root {
+    --primary: #1aac83;
+    --error: #e7195a;
+  }
+  
+.home {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 100px;
+  }
