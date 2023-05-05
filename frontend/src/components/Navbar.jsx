@@ -21,7 +21,7 @@ const Navbar = () => {
         <nav className="flex items-center ">{user &&(
           <div className="loggedin flex items-center justify-between">
             <div className="greet flex items-center justify-between">welcome back <h3 className="ml-2 text-2xl font-semibold">{user.username}</h3></div>
-            <button onClick={handleClick} className="bg-white border-2 rounded-md py-[6px] px-[10px] border-green-500 text-green-500 ml-2" >Logout</button>
+            <button onClick={handleClick} className="bg-white border-2 rounded-md py-[6px] px-[10px] border-green-500 text-green-500 ml-2 hover:bg-green-700 hover:text-white hover:border-green-700" >Logout</button>
           </div>
           )}
           {!user &&(

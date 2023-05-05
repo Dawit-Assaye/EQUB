@@ -5,40 +5,40 @@
     
   }
   
-main{
+/* main{
   margin-top: 20px;
   display: grid;
   grid-template-columns: 1.5fr 4fr 1fr;
   gap: 10px;
-}
+} */
 
 /* left section */
 
-.left{
+/* .left{
  display: flex;
  align-items: center;
  justify-content:space-around;
  padding: 5px;
  max-height: 250px;
-}
-.left img{
+} */
+/* .left img{
   width: 150px;
   height: 150px;
   border-radius: 50%;
-}
-.left p{
+} */
+/* .left p{
   text-align: center;
-}
+} */
 
 /* middle section */
-.home-greet{
+/* .home-greet{
   display: flex;
   align-items: center;
   justify-content: left;
   color: black;
-}
-.home-greet h2{
+} */
+/* .home-greet h2{
   color: var(--primary);
-}
+} */
 
 /* slider */

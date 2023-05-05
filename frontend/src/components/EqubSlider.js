@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+// import React, { useState, useEffect, useRef } from 'react';
 import EqubSlides from './subComponents/EqubSlides';
 
 function EqubSlider({ slides }) {
@@ -27,7 +27,7 @@ function EqubSlider({ slides }) {
 
 
   return (
-      <div className="equb-slider">
+      <div className="equb-slider-inner justify-self-end w-[400px]">
         {slides.map(slide => (
           <EqubSlides key={slide.id} {...slide} />
         ))}

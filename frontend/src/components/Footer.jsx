@@ -65,7 +65,7 @@ function Footer() {
           </div>
         </div>
         <div className="row-2">
-            <p className="text-center">
+            <p className="text-centerf">
               &copy; 2023 MyEqub. All rights reserved.
             </p>
         </div>
