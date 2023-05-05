@@ -11,8 +11,11 @@ const loginEquber = async (req, res) => {
   try {
     const equber = await Equber.login(email, password);
     const token = await createToken(equber._id);
+    const username=equber.username;
+    const firstname=equber.first_name;
+    const lastname=equber.last_name;
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token,username,firstname,lastname });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

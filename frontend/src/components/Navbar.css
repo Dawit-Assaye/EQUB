@@ -4,25 +4,16 @@
     --error: #e7195a;
     --shadow:rgba(0, 0, 0, 0.2);
   }
-  header {
-    /* background-image: linear-gradient(to left, var(--primary) , rgb(0, 0, 0)); */
-     background: #fff;
-    max-width: 100%;
-    margin: 0 auto;
-    box-shadow:0 2px 8px var(--shadow);
-  }
+
   header .nav {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 10px 20px;
+    max-width: 100%;
+    margin: 0 30px 5px 100px;
+    padding: 10px 0px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  header a {
-    color: #333;
-    text-decoration: none;
-  }
+
 
   nav {
     display: flex;
@@ -30,7 +21,7 @@
   
   }
   nav a {
-    margin-left: 10px;
+    margin-left: 0px;
   }
   nav button {
     background: #fff;
@@ -43,6 +34,26 @@
     font-size: 1em;
     margin-left: 10px;
   }
-  .nav h1{
-    color:var(--primary)
+ 
+  .greet {
+    padding: 0;
+    color: #000000;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
   }
+  .greet h3{
+    font-size: 20px;
+    padding-left: 4px;
+    color: rgb(10, 8, 8);
+    position: inherit;
+  }
+  nav .loggedin{
+    display: flex;
+   align-items: center;
+   justify-content: space-between;
+  }
+  
+  

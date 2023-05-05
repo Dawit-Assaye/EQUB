@@ -80,7 +80,7 @@ return(
           <button disabled={isLoading}>Signup</button>
           {error && <div className='error'>{error}</div>} */}
 
-<div className="progressbar">
+<div className="progressbar ">
         <div
           style={{ width: page === 0 ? "33.3%" : page === 1 ? "66.6%" : "100%" }}
         ></div>
@@ -96,7 +96,8 @@ return(
             disabled={page === 0}
             onClick={() => {
               setPage((currPage) => currPage - 1);
-            }}
+          }}
+          className='bg-green-500'
           >
             Prev
           </button>
@@ -113,7 +114,8 @@ return(
                     setPage((currPage) => currPage+1);
                 }
             }}
-            >
+        className='bg-green-500'    
+        >
             {page === FormTitles.length - 1 ? "Submit" : "Next"}
           </button>
         </div>

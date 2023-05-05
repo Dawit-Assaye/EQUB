@@ -1,10 +1,44 @@
 :root {
     --primary: #1aac83;
     --error: #e7195a;
+    --main:#4CAF50;
+    
   }
   
-.home {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 100px;
-  }
+main{
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1.5fr 4fr 1fr;
+  gap: 10px;
+}
+
+/* left section */
+
+.left{
+ display: flex;
+ align-items: center;
+ justify-content:space-around;
+ padding: 5px;
+ max-height: 250px;
+}
+.left img{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.left p{
+  text-align: center;
+}
+
+/* middle section */
+.home-greet{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  color: black;
+}
+.home-greet h2{
+  color: var(--primary);
+}
+
+/* slider */

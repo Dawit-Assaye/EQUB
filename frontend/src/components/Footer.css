@@ -1,3 +1,6 @@
+:root{
+   --main:#4CAF50;
+}
 footer {
     background-color: #000000;
     padding: 30px 0;
@@ -15,13 +18,7 @@ footer {
     
     margin-bottom: 10px;
   }
-  
-  footer ul li i {
-    margin-right: 10px;
-    color: var(--primary);
-    text-decoration: none;
-  }
-  
+    
   footer ul li a {
     color:var(--primary);
     text-decoration: none;
@@ -37,23 +34,30 @@ footer {
   }
   
   .container {
-    max-width: 1200px;
-    margin: 44px 0 0 0;
+    max-width: 100%;
     padding-top: 44px;
   }
   
   .row {
     display: flex;
-    /* flex-wrap: wrap; */
-    
   }
-  .col-md-12{
-    align-content: center;
+  .row-2{
+    display: flex;
+    justify-content: center;
   }
-  
   .col-md-4 {
     width: 33.33%;
     padding: 0 15px;
     margin-bottom: 30px;
   }
+  .text-center{
+    color: var(--primary);
+    font-size: 23px;
+    text-align: center;
+  }
   
+  /* custom */
+  .companyInfo li{
+color: var(--primary);
+
+  }

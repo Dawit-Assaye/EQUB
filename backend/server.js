@@ -8,6 +8,7 @@ const accountRoutes=require('./routes/account')
 // const virtualBankDBConnection=require('./connections/virtualDBConnection')
 
 //middleware
+// app.use(express.static(__dirname + '/public'));
 app.use(express.json());//to access req.body
 
 app.use((req,res,next)=>{
