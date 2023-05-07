@@ -11,11 +11,13 @@ const loginEquber = async (req, res) => {
   try {
     const equber = await Equber.login(email, password);
     const token = await createToken(equber._id);
-    const username=equber.username;
+    const job = equber.job;
+    const city = equber.city;
+    const username =equber.username;
     const firstname=equber.first_name;
     const lastname=equber.last_name;
 
-    res.status(200).json({ email, token,username,firstname,lastname });
+    res.status(200).json({ email, token,username,firstname,lastname,job,city });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -34,7 +36,8 @@ const signupEquber = async (req, res) => {
     job,
     phone_number,
     city,
-    region } = req.body;
+    region 
+  } = req.body;
 
     try {
       const equber = await Equber.signup(
@@ -48,10 +51,13 @@ const signupEquber = async (req, res) => {
       job,
       phone_number,
       city,
-      region);
+      region
+      );
     const token = await createToken(equber._id);
-
-    res.status(200).json({ email, username,token });
+      const firstname = equber.first_name;
+      const lastname = equber.last_name;
+      
+    res.status(200).json({ email, username,token,firstname,lastname,job,city });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

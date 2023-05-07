@@ -17,11 +17,11 @@ export const useSignup=()=>{
     job,
     phone_number,
     city,
-    region
+    region,
     )=>{
 
     setError(null);
-    setIsLoading(true);
+        setIsLoading(true);
     
     const response=await fetch('/api/equber/signup',{
         method:'POST',
@@ -37,7 +37,8 @@ export const useSignup=()=>{
             job,
             phone_number,
             city,
-            region})
+            region
+            })
     })
     const json=await response.json();
 

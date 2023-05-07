@@ -1,6 +1,8 @@
 const mongoose=require('mongoose')
 const Schema = mongoose.Schema;
 
+
+
 const equberSchema = new Schema({
   username:{
     type:String,
@@ -37,18 +39,20 @@ const equberSchema = new Schema({
   },
   phone_number:{
     type:Number,
-    requred:true
+    required:true
   },
-  address: {
-    city: {
-      type: String,
-      requred:true
-    },
-    region: {
-      type: String,
-      requred:true
-    },
+  city: {
+    type: String,
+    
   },
+  region: {
+    type: String,
+    
+  },
+  // address: {
+  //   type: addressSchema,
+  //   required:true
+  // },
   bank_account: {
     account_number: {
       type: Number
@@ -77,7 +81,8 @@ equberSchema.statics.signup = async function (
   job,
   phone_number,
   city,
-  region) {
+  region
+) {
   const exists = await this.findOne({ email });
 
   // validation
@@ -85,12 +90,12 @@ equberSchema.statics.signup = async function (
     throw Error("All fields must be filled");
   }
 
-  if (!validator.isEmail(email)) {
-    throw Error("Email is not valid");
-  }
-  if (!validator.isStrongPassword(password)) {
-    throw Error("Password is not enough strong");
-  }
+  // if (!validator.isEmail(email)) {
+  //   throw Error("Email is not valid");
+  // }
+  // if (!validator.isStrongPassword(password)) {
+  //   throw Error("Password is not enough strong");
+  // }
 
   if (exists) {
     throw Error("Email already in use");
@@ -110,7 +115,8 @@ equberSchema.statics.signup = async function (
     job,
     phone_number,
     city,
-    region});
+    region
+  });
   return equber;
 };
 

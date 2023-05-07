@@ -24,8 +24,9 @@ const [formData, setFormData] = useState({
   age:0,
   job:"",
   phone_number:0,
-  city:"",
-  region:""
+  city: "",
+  region: ""
+  
 });
 
 const FormTitles = ["Sign Up ", "Personal Info", "Additional Info"];
@@ -57,7 +58,8 @@ const handleSubmit=async(e)=>{
       formData.job,
       formData.phone_number,
       formData.city,
-      formData.region)
+      formData.region
+  )
 }
 
 return(

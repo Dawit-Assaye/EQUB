@@ -27,10 +27,12 @@ function EqubSlider({ slides }) {
 
 
   return (
-      <div className="equb-slider-inner justify-self-end w-[400px]">
+    <div className="equb-slider-inner grid grid-cols-2 gap-3 justify-center">
+     
         {slides.map(slide => (
           <EqubSlides key={slide.id} {...slide} />
         ))}
+        
       </div>
   );
 }
