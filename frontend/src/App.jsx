@@ -7,12 +7,13 @@ import "./App.css"
 
 
 //pages and components
+import Visit from "./pages/Visit";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import EqubForm from "./components/EqubForm";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Visit from "./pages/Visit";
 
 function App() {
   const {user}=useAuthContext();
@@ -42,16 +43,18 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div  style={{ position: navbarPosition, top: 0, width: "100%" }}>
+      <div  style={{ position: navbarPosition, top: 0, width: "100%",zIndex: 100 }}>
       <Navbar/>
       </div>
       <div className="container">
         <Routes>
-          <Route path="/" 
-          element={user ? <Home/> :<Navigate to="/visit"/>}
-          // element={user ? <Home /> : <Navigate to="/login"/> }
+          <Route path="/equb/create" element={<EqubForm />}
           />
-          <Route path="/visit" element={!user ? <Visit/> : <Navigate to="/"/>}
+          <Route path="/" element={!user ? <Visit/> : <Navigate to="/equber"/>}
+          />
+          <Route path="/equber" 
+          element={user ? <Home/> :<Navigate to="/"/>}
+          // element={user ? <Home /> : <Navigate to="/login"/> }
           />
           <Route path="/login" element={!user ? <Login/> : <Navigate to="/"/>}
           />

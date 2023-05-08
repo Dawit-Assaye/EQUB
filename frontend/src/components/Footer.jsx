@@ -50,7 +50,7 @@ function Footer() {
             <h4>Site Map</h4>
             <ul className="list-unstyled">
               <li>
-               <Link to="/visit">Home</Link> 
+               <Link to="/">Home</Link> 
               </li>
               <li>
                 <a href="#">About Us</a>

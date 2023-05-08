@@ -44,3 +44,12 @@ form.login {
   input.error{
     border:1px solid var(--error)
   }
+  div.success {
+    padding: 10px;
+    background: #79dfc2;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+  

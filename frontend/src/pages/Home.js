@@ -7,6 +7,7 @@ import equb from "../photo/equb.png";
 //components
 import EqubSlides from "../components/subComponents/EqubSlides.js";
 import EqubSlider from "../components/EqubSlider.js";
+
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -54,10 +55,12 @@ const Home = () => {
           />
           <div className="absolute text-black font-semibold text-4xl top-">
             Create your Own Equb Group !
-          </div>
+            </div>
           <button className="absolute bg-green-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[80px] bottom-2">
+            <Link to="/equb/create">
             create
-          </button>
+              </Link>
+              </button>
         </div>
         <div className="finding-equb w-full flex flex-col justify-center mt-14">
           <div className="home-greet flex items-baseline justify-center mb-2 gap-1">

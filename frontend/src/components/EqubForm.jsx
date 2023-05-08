@@ -1,14 +1,17 @@
 import { useState } from "react"
 import { useCreateEqub } from "../hooks/useCreateEqub"
 
+
 function EqubForm() {
-    const { formData, setFormData } = useState({
+    const [ formData, setFormData] = useState({
         equb_name: "",
         equb_type: "",
         equb_amount: "",
-        equb_round:""
+        equb_round: "",
+        equb_starting_date:""
     })
-  const {createEqub,error,isLoading}=useCreateEqub()
+  
+  const {createEqub,error,message}=useCreateEqub()
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,12 +19,13 @@ function EqubForm() {
       formData.equb_name,
       formData.equb_type,
       formData.equb_amount,
-      formData.equb_round
+      formData.equb_round,
+      formData.equb_starting_date
     )
   };
 
   return (
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
               <h3>Equb Informations</h3>
         <label htmlFor="name">Name</label>
           <input
@@ -61,14 +65,26 @@ function EqubForm() {
           <input
         type="text"
         placeholder="Maximum number of rounds or people..."
-              value={formData.equb.round}
+              value={formData.equb_round}
               id="round"
         onChange={(e) => {
           setFormData({ ...formData, equb_round: e.target.value });
         }}
+      />
+
+      <label htmlFor="starting">Starting date</label>
+          <input
+        type="date"
+        placeholder="Starting date of this equb..."
+              value={formData.equb_starting_date}
+              id="starting"
+        onChange={(e) => {
+          setFormData({ ...formData, equb_starting_date: e.target.value });
+        }}
           />
-          <button disabled={isLoading}>Login</button>
+          <button>Create</button>
       {error && <div className="error">{error}</div>}
+      {message && <div className="relative flex items-center justify-center "><div className="success">{message}</div></div>}
       {/* Toast needed here */}
         </form>
   )

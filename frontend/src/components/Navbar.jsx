@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="w-full m-0 h-24 bg-white ">
+    <header className="w-full m-0 h-24 bg-white">
       <div className="nav  w-full shadow-dark-300 shadow-lg mr-[30px] mb-[5px] pl-[100px] py-2 flex items-center justify-between h-24">
         <Link to="/">
           <h1 className="text-green-500 text-[60px]">EQUB</h1>
