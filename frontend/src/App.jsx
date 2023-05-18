@@ -11,7 +11,6 @@ import Visit from "./pages/Visit";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import EqubForm from "./components/EqubForm";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -48,18 +47,17 @@ function App() {
       </div>
       <div className="container">
         <Routes>
-          <Route path="/equb/create" element={<EqubForm />}
-          />
           <Route path="/" element={!user ? <Visit/> : <Navigate to="/equber"/>}
+          />
+          <Route path="/signup" element={!user ? <Signup/> : <Navigate to="/equber"/>}
+          />
+          <Route path="/login" element={!user ? <Login/> : <Navigate to="/equber"/>}
           />
           <Route path="/equber" 
           element={user ? <Home/> :<Navigate to="/"/>}
           // element={user ? <Home /> : <Navigate to="/login"/> }
           />
-          <Route path="/login" element={!user ? <Login/> : <Navigate to="/"/>}
-          />
-          <Route path="/signup" element={!user ? <Signup/> : <Navigate to="/"/>}
-          />
+      
         </Routes>
       </div>
       <Footer/>

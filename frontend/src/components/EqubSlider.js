@@ -30,7 +30,7 @@ function EqubSlider({ slides }) {
     <div className="equb-slider-inner grid grid-cols-2 gap-3 justify-center">
      
         {slides.map(slide => (
-          <EqubSlides key={slide.id} {...slide} />
+          <EqubSlides key={slide._id} {...slide} />
         ))}
         
       </div>

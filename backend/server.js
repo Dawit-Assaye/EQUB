@@ -3,8 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const equberRoutes = require('./routes/equber')
-const equbRoutes=require('./routes/equb')
-const accountRoutes=require('./routes/account')
+const equbRoutes = require('./routes/equb')
+const adminRoutes=require('./routes/admin')
+const bankAccountRoutes=require('./routes/bankAccount')
 
 // const virtualBankDBConnection=require('./connections/virtualDBConnection')
 
@@ -19,8 +20,10 @@ next();
 })
 
 //routes
-app.use('/api/equber',equberRoutes)
-app.use('/api/equb',equbRoutes)
+app.use('/api/admin',adminRoutes)
+app.use('/api/equber', equberRoutes)
+app.use('/api/equb', equbRoutes)
+app.use('/api/bankAccount',bankAccountRoutes)
 
 
 // Connect to EqubDB and listen on port

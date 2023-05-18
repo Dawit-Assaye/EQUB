@@ -25,8 +25,11 @@ function EqubForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
-              <h3>Equb Informations</h3>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-y-1 items-center justify-center">
+      <h3 className="text-xl text-green-500">Equb Informations</h3>
+      <div className="flex flex-wrap gap-x-6 items-center justify-center">
+      <div>
+      
         <label htmlFor="name">Name</label>
           <input
         type="text"
@@ -61,6 +64,8 @@ function EqubForm() {
         }}
           />
            
+      </div>
+      <div className="items-start">
            <label htmlFor="round">Max-Round</label>
           <input
         type="text"
@@ -82,10 +87,12 @@ function EqubForm() {
           setFormData({ ...formData, equb_starting_date: e.target.value });
         }}
           />
-          <button>Create</button>
+        </div>
+        </div>
+          <button className="bg-green-500">Create</button>
       {error && <div className="error">{error}</div>}
       {message && <div className="relative flex items-center justify-center "><div className="success">{message}</div></div>}
-      {/* Toast needed here */}
+        {/* Toast needed here */}
         </form>
   )
 }

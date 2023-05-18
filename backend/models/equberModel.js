@@ -47,21 +47,16 @@ const equberSchema = new Schema({
     type: String,
     
   },
+
   // address: {
   //   type: addressSchema,
   //   required:true
   // },
-  bank_account: {
-    account_number: {
-      type: Number
-    },
-    balance: {
-      type: Number
-    },
-    pin: {
-      type: Number
-    },
-  },
+  wallet_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Wallet",
+    required: false,
+ }
 },{timestamps:true});
 const bcrypt = require("bcrypt");
 const validator = require("validator");

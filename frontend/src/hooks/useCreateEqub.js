@@ -11,7 +11,7 @@ export const useCreateEqub = () => {
         setError(null);
         // setIsLoading(true);
        
-        const response = await fetch('/api/equb', {
+        const response = await fetch('/api/equb/requests/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
