@@ -38,7 +38,7 @@ function EqubSlides(props) {
   };
   return (
     // equb_id as a key for each equbs
-    <div className="equb-slide shadow-md  shadow-slate-600 w-[370px] h-[220px] rounded-sm flex p-3 items-center justify-between relative">
+    <div className="equb-slide shadow-md  shadow-slate-600 w-[370px] h-[220px] rounded-sm flex p-3 items-center justify-between relative bg-white">
       <img src={props.img} alt="Equb" className="w-[170px] h-[170px] rounded-full" />
       <div className="equb-description p-1 ">
         <h3 className="equb-name text-green-400 font-semibold">{props.equb_name}</h3>

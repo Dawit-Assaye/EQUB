@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongoose").Types;
+
 const Equber = require("../models/equberModel");
 const { EquberBankAccount } = require("../models/bankAccountModel");
 const Wallet = require("../models/walletModel");
@@ -20,18 +22,16 @@ const loginEquber = async (req, res) => {
     const lastname = equber.last_name;
     const wallet_id = equber.wallet_id;
 
-    res
-      .status(200)
-      .json({
-        email,
-        token,
-        username,
-        firstname,
-        lastname,
-        job,
-        city,
-        wallet_id,
-      });
+    res.status(200).json({
+      email,
+      token,
+      username,
+      firstname,
+      lastname,
+      job,
+      city,
+      wallet_id,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -177,16 +177,100 @@ const createWallet = async (req, res) => {
 const getWalletInfo = async (req, res) => {
   try {
     const owner_id = req.user._id;
-    
-    const wallet = await Wallet.findOne({owner_id});
+
+    const wallet = await Wallet.findOne({ owner_id });
     if (!wallet) {
       return res.status(404).json({ message: "Wallet not found." });
     }
-    
+
     res.status(200).json(wallet);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
+  }
+};
+
+//post deposit to wallet from bank
+const depositToWallet = async (req, res) => {
+  const { amount, accountNumber, wallet_id } = req.body;
+
+  const walletObjectId=new ObjectId(wallet_id)
+console.log('back recieved',amount, accountNumber, walletObjectId);
+
+  try {
+    // Check if the bank account exists
+    const bankAccount = await EquberBankAccount.findOne({ account_number: accountNumber });
+    if (!bankAccount) {
+      return res.status(404).json({ error: 'Bank account not found' });
+    }
+
+    // Check if the wallet exists
+    const wallet = await Wallet.findById(wallet_id);
+    console.log(wallet);
+    if (!wallet) {
+      return res.status(500).json({ error: 'Wallet not found' });
+    }
+    // Check if the bank account has sufficient balance
+    if (Number(bankAccount.balance) < Number(amount)) {
+      return res.status(400).json({ error: 'Insufficient balance in the bank account' });
+    }
+    console.log('Working');
+
+    // Perform the transaction
+    bankAccount.balance = Number(bankAccount.balance) - Number(amount);
+    await bankAccount.save();
+    
+    wallet.balance = Number(wallet.balance) + Number(amount);
+    await wallet.save();
+
+    // Return success response
+    return res.status(200).json({ message: 'Deposit successful' });
+  } catch (error) {
+    // Handle any errors
+    return res.status(500).json({ error: 'An error occurred' });
+  }
+};
+
+
+
+//post withdraw from wallet to bank
+const withdrawFromWallet = async (req, res) => {
+  const { amount, accountNumber, wallet_id } = req.body;
+
+  const walletObjectId=new ObjectId(wallet_id)
+console.log('back recieved',amount, accountNumber, walletObjectId);
+
+  try {
+    // Check if the account exists
+    const bankAccount = await EquberBankAccount.findOne({ account_number: accountNumber });
+    if (!bankAccount) {
+      return res.status(404).json({ error: 'Bank account not found' });
+    }
+
+    // Check if the wallet exists
+    const wallet = await Wallet.findById(wallet_id);
+    console.log(wallet);
+    if (!wallet) {
+      return res.status(500).json({ error: 'Wallet not found' });
+    }
+    // Check if the wallet has sufficient balance
+    if (Number(wallet.balance) < Number(amount)) {
+      return res.status(400).json({ error: 'Insufficient balance in the wallet' });
+    }
+    console.log('Working');
+
+    // Perform the transaction
+    wallet.balance = Number(wallet.balance) - Number(amount);
+    await wallet.save();
+    
+    bankAccount.balance = Number(bankAccount.balance) + Number(amount);
+    await bankAccount.save();
+
+    // Return success response
+    return res.status(200).json({ message: 'withdrawal successful' });
+  } catch (error) {
+    // Handle any errors
+    return res.status(500).json({ error: 'An error occurred' });
   }
 };
 
@@ -196,4 +280,6 @@ module.exports = {
   getEquber,
   createWallet,
   getWalletInfo,
+  depositToWallet,
+  withdrawFromWallet
 };

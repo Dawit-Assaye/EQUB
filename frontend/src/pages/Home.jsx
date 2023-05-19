@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext.js";
-import { useCreateWallet } from "../hooks/useCreateWallet";
+import { useCreateWallet } from "../hooks/useCreateWallet.js";
 
 //images
 import dy from "../photo/dy.jpg";
 import equb from "../photo/equb.png";
+import joined from "../photo/joined.jpeg";
 
 //components
 // import EqubSlides from "../components/subComponents/EqubSlides.js";
@@ -12,6 +13,8 @@ import EqubSlider from "../components/EqubSlider.js";
 import Wallet from "../components/Wallet.jsx";
 import Modal from "../components/Modal.jsx";
 import EqubForm from "../components/EqubForm.jsx";
+import JoinedEqubs from "../components/JoinedEqubs.jsx";
+import PendingEqubs from "../components/PendingEqubs.jsx";
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -19,16 +22,16 @@ const Home = () => {
   const [wallet, setWallet] = useState(null);
   const [showCreateWalletModal, setShowCreateWalletModal] = useState(false);
   const [showCreateEqubModal, setShowCreateEqubModal] = useState(false);
-  
+
   //fetching data from the wallet form
   const [walletFormValues, setWalletFormValues] = useState({
     bankName: "",
     accountNumber: "",
     pinNumber: "",
   });
-  
+
   const { createWallet, error, message } = useCreateWallet();
-  
+
   const handleCreateWallet = async (e) => {
     e.preventDefault();
     await createWallet(
@@ -38,27 +41,30 @@ const Home = () => {
     );
   };
 
-// fetching wallet info from database
-useEffect(() => {
-  const fetchWalletInfo = async () => {
-    try {
-      const response = await fetch("/api/equber/wallet/info", {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
-      const walletData = await response.json();
-      setWallet(walletData);
-    } catch (error) {
-      console.error(error);
+  // fetching wallet info from database
+  useEffect(() => {
+    const fetchWalletInfo = async () => {
+      try {
+        const response = await fetch("/api/equber/wallet/info", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        if (response.ok) {
+          const walletData = await response.json();
+          setWallet(walletData);
+        } else {
+          console.error("Failed to fetch wallet info");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (user) {
+      fetchWalletInfo();
     }
-  };
+  }, [user]);
+  console.log("Wallet info", wallet);
 
-  if (user) {
-    fetchWalletInfo();
-  }
-}, [user]);
-console.log('Wallet info',wallet);
-
-  
   //fetching equbs in the database
   useEffect(() => {
     const fetchEqubs = async () => {
@@ -83,6 +89,8 @@ console.log('Wallet info',wallet);
     return;
   }
 
+  //handler functions
+
   const handleOpenCreateWalletModal = () => {
     setShowCreateWalletModal(true);
   };
@@ -98,7 +106,6 @@ console.log('Wallet info',wallet);
   const handleCloseCreateEqubModal = () => {
     setShowCreateEqubModal(false);
   };
-
 
   // console.log(user.wallet_id);
 
@@ -240,7 +247,7 @@ console.log('Wallet info',wallet);
             </div>
           )}
 
-          <div className="joined-equbs shadow-lg shadow-gray-400 rounded-lg p-4">
+          {/* <div className="joined-equbs shadow-lg shadow-gray-400 rounded-lg p-4">
             <h2 className="text-green-500 font-semibold">Joined Equbs</h2>
             <ul>
               <li>Equb Name 1</li>
@@ -255,10 +262,10 @@ console.log('Wallet info',wallet);
               <li>Equb Name 2</li>
               <li>Equb Name 3</li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="main-middle">
+      <div className="main-middle mx-24  mb-32">
         <div className="justify-center">
           <div className="popular-equbs  grid grid-rows[50px_200px] mt-24">
             <h2 className="text-4xl mb-10 text-center text-black font-sans">
@@ -266,6 +273,37 @@ console.log('Wallet info',wallet);
             </h2>
             <div className="equb-slider justify-center my-4 ml-40">
               <EqubSlider slides={equbs} />
+            </div>
+          </div>
+        </div>
+
+        <div className="main-equbs flex flex-col gap-10">
+          <div className="joined-equbs h-96 bg-white grid grid-cols-2 gap-10 mt-10 shadow-lg shadow-green-300">
+            <div className="relative">
+              <div
+                className="absolute inset-0 bg-cover filter blur-[1px]"
+                style={{ backgroundImage: `url(${joined})` }}
+              ></div>
+              <h2 className="text-green-700 font-semibold text-7xl absolute inset-0 flex items-center justify-center z-10 animate-bounce">
+                Joined Equbs
+              </h2>
+            </div>
+            <div className="flex flex-col">
+              <JoinedEqubs />
+            </div>
+          </div>
+          <div className="pending-equbs h-96 bg-white grid grid-cols-2 gap-10 pt-10 shadow-lg shadow-green-300 ">
+            <div className="flex flex-col">
+              {/* <PendingEqubs equbs={equbs} /> */}
+            </div>
+            <div className="relative">
+              <div
+                className="absolute inset-0 bg-cover filter blur-[1px] "
+                style={{ backgroundImage: `url(${joined})` }}
+              ></div>
+              <h2 className="text-green-500 font-light text-7xl absolute inset-0 flex items-center justify-center z-10">
+                Pending Equbs
+              </h2>
             </div>
           </div>
         </div>

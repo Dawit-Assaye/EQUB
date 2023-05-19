@@ -212,7 +212,18 @@ const getEqubs = async (req, res) => {
   }
 };
 
-//
+//Get joined equbs
+const getJoinedEqubs = async (req, res) => {
+  const member_id = req.user._id;
+  try {
+    const joinedEqubs = await Equb.find({ members: { $in: [member_id] } }).sort({ createdAt: 1 });
+    res.status(200).json(joinedEqubs);
+  } catch (error) {
+    res.status(400).json({ error: "cann't get joined equbs" })
+  }
+}
+
+//add sender to a member of the equb
 
 const addSenderToMember=async (req, res) => {
   try {
@@ -243,4 +254,4 @@ const addSenderToMember=async (req, res) => {
 };
 
 
-module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,addSenderToMember};
+module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getJoinedEqubs,addSenderToMember};
