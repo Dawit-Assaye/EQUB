@@ -13,9 +13,12 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Equb from "./pages/Equb";
+
 
 function App() {
-  const {user}=useAuthContext();
+  const { user } = useAuthContext();
+  
 
 // //making sticky navbar
   // Add a state to keep track of the navbar's position
@@ -42,10 +45,10 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div  style={{ position: navbarPosition, top: 0, width: "100%",zIndex: 100 }}>
+      <div style={{ position: navbarPosition, top: 0, width: "100%",zIndex: 100 }}>
       <Navbar/>
       </div>
-      <div className="container">
+      <div className="container ">
         <Routes>
           <Route path="/" element={!user ? <Visit/> : <Navigate to="/equber"/>}
           />
@@ -57,6 +60,8 @@ function App() {
           element={user ? <Home/> :<Navigate to="/"/>}
           // element={user ? <Home /> : <Navigate to="/login"/> }
           />
+          <Route path="/equb/:equbId" element={user? <Equb />: <Navigate to="/login"/>} />
+
       
         </Routes>
       </div>

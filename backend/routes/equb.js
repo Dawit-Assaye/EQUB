@@ -1,6 +1,6 @@
 const express=require('express')
 //controller functions
-const {equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,getEqubs,getJoinedEqubs,addSenderToMember, updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests}=require('../controllers/equbControllers')
+const {equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,getEqubs,getEqub,getJoinedEqubs,addSenderToMember, updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests}=require('../controllers/equbControllers')
 const requireAuth=require('../middlewares/requireAuth');
 
 
@@ -36,8 +36,11 @@ router.post('/create', createEqub)
 //Get all equbs
 router.get('/all', getEqubs)
 
+//Get specific equb
+router.get('/:id',getEqub)
+
 //Get joined equbs
-router.get('/joined',getJoinedEqubs)
+router.get('/joined/:id',getJoinedEqubs)
 
 //Post add sender as a member
 router.post('/add/members',addSenderToMember)   

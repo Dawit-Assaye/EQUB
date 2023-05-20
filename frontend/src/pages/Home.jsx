@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import { useCreateWallet } from "../hooks/useCreateWallet.js";
+import { useNavigate } from 'react-router-dom';
+
 
 //images
 import dy from "../photo/dy.jpg";
 import equb from "../photo/equb.png";
-import joined from "../photo/joined.jpeg";
+import joined from "../photo/new.jpeg";
 
 //components
 // import EqubSlides from "../components/subComponents/EqubSlides.js";
@@ -20,8 +22,11 @@ const Home = () => {
   const { user } = useAuthContext();
   const [equbs, setEqubs] = useState([]);
   const [wallet, setWallet] = useState(null);
+  const [joinedEqubs, setJoinedEqubs] = useState([]);
   const [showCreateWalletModal, setShowCreateWalletModal] = useState(false);
   const [showCreateEqubModal, setShowCreateEqubModal] = useState(false);
+  const navigate = useNavigate();
+
 
   //fetching data from the wallet form
   const [walletFormValues, setWalletFormValues] = useState({
@@ -41,8 +46,10 @@ const Home = () => {
     );
   };
 
-  // fetching wallet info from database
   useEffect(() => {
+
+    // fetching wallet info from database
+
     const fetchWalletInfo = async () => {
       try {
         const response = await fetch("/api/equber/wallet/info", {
@@ -59,14 +66,8 @@ const Home = () => {
       }
     };
 
-    if (user) {
-      fetchWalletInfo();
-    }
-  }, [user]);
-  console.log("Wallet info", wallet);
+    //fetch all equbs 
 
-  //fetching equbs in the database
-  useEffect(() => {
     const fetchEqubs = async () => {
       try {
         const response = await fetch("/api/equb/all", {
@@ -79,16 +80,30 @@ const Home = () => {
       }
     };
 
+    // fetch joined equbs
+
+    const fetchJoinedEqubs = async () => {
+      try {
+        const response = await fetch(`/api/equb/joined/${user.user_id}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        const equbsData = await response.json();
+        if (response.ok) {
+          setJoinedEqubs(equbsData);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (user) {
+      fetchWalletInfo();
       fetchEqubs();
+      if (joinedEqubs.length === 0) {
+        fetchJoinedEqubs();
+      }
     }
-  }, [user]);
-
-  if (!user) {
-    console.log("need to log in buddy");
-    return;
-  }
-
+  }, [user, joinedEqubs]);
   //handler functions
 
   const handleOpenCreateWalletModal = () => {
@@ -107,6 +122,11 @@ const Home = () => {
     setShowCreateEqubModal(false);
   };
 
+  const redirectToJoinedEqubPage = (equbId) => {
+    navigate(`/equb/${equbId}`);
+  };
+  
+
   // console.log(user.wallet_id);
 
   return (
@@ -118,6 +138,7 @@ const Home = () => {
             className="flex flex-col items-center"
             onSubmit={handleCreateWallet}
           >
+      
             {/* Wallet creation form fields */}
             <input
               type="text"
@@ -157,7 +178,7 @@ const Home = () => {
             />
             <button
               type="submit"
-              className=" bg-green-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[140px] justify-self-end 
+              className=" bg-lime-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-lime-700 w-[140px] justify-self-end 
             "
             >
               Create Wallet
@@ -185,7 +206,7 @@ const Home = () => {
             <div className="h-[80px] flex flex-col justify-center mt-4">
               <div className=" flex flex-col justify-center items-center">
                 <p className="username  text-xl w-[140px] h-10 font-semibold ml-4">
-                  {user.firstname} {user.lastname}
+                  {user.user_id} {user.lastname}
                 </p>
               </div>
               <div className="user-info flex flex-col justify-center items-center ">
@@ -211,23 +232,23 @@ const Home = () => {
             </div>
             <button
               onClick={handleOpenCreateEqubModal}
-              className="absolute bg-green-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[140px] bottom-2"
+              className="absolute bg-lime-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-lime-700 w-[140px] bottom-2"
             >
               Create Equb
             </button>
           </div>
           <div className="finding-equb w-full flex flex-col justify-center mt-14">
             <div className="home-greet flex items-baseline justify-center mb-2 gap-1">
-              <h2 className="text-green-500 text-4xl">Hi {user.firstname},</h2>
+              <h2 className="text-fuchsia-800 text-4xl">Hi {user.firstname},</h2>
               <p className="text-xl">Let's Find You An Equb</p>
             </div>
             <div className="search-bar flex justify-center gap-0 content-center items-center">
               <input
                 type="text"
                 placeholder="Insert Equb Name Here "
-                className="my-0 hover:border-green-400 w-[400px]"
+                className="my-0 hover:border-fuchsia-800 w-[400px]"
               />
-              <button className="bg-green-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[80px]">
+              <button className="bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[80px]">
                 search
               </button>
             </div>
@@ -240,7 +261,7 @@ const Home = () => {
             <div className="wallet-create-button  bg-gradient-to-t from-green-300 to-indigo-300 bg-opacity-5 shadow-lg shadow-gray-400 rounded-lg px-12 py-14">
               <button
                 onClick={handleOpenCreateWalletModal}
-                className=" bg-green-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[160px]"
+                className=" bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-fuchsia-950 w-[160px]"
               >
                 Create Wallet
               </button>
@@ -278,32 +299,35 @@ const Home = () => {
         </div>
 
         <div className="main-equbs flex flex-col gap-10">
-          <div className="joined-equbs h-96 bg-white grid grid-cols-2 gap-10 mt-10 shadow-lg shadow-green-300">
-            <div className="relative">
-              <div
-                className="absolute inset-0 bg-cover filter blur-[1px]"
-                style={{ backgroundImage: `url(${joined})` }}
-              ></div>
-              <h2 className="text-green-700 font-semibold text-7xl absolute inset-0 flex items-center justify-center z-10 animate-bounce">
+        <h2 className="text-lime-500 font-normal text-6xl flex items-center justify-start mt-10 ">
                 Joined Equbs
               </h2>
+          <div className="joined-equbs -skew-x-12 h-96 bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
+
+            <div className="relative">
+              <div
+                 className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
+                style={{ backgroundImage: `url(${joined})` }}
+              ></div>
+             
             </div>
             <div className="flex flex-col">
-              <JoinedEqubs />
+              <JoinedEqubs  joinedEqubs={joinedEqubs} onClickJoinedEqub={redirectToJoinedEqubPage} />
             </div>
           </div>
-          <div className="pending-equbs h-96 bg-white grid grid-cols-2 gap-10 pt-10 shadow-lg shadow-green-300 ">
+          <h2 className="text-lime-500 font-normal text-6xl flex items-center justify-end mt-10 ">
+          Pending Equbs
+              </h2>
+          <div className="pending-equbs skew-x-12 h-96 bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
             <div className="flex flex-col">
               {/* <PendingEqubs equbs={equbs} /> */}
             </div>
             <div className="relative">
               <div
-                className="absolute inset-0 bg-cover filter blur-[1px] "
+             className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
                 style={{ backgroundImage: `url(${joined})` }}
               ></div>
-              <h2 className="text-green-500 font-light text-7xl absolute inset-0 flex items-center justify-center z-10">
-                Pending Equbs
-              </h2>
+             
             </div>
           </div>
         </div>

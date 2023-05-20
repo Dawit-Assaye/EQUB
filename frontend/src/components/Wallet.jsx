@@ -53,27 +53,28 @@ function Wallet(props) {
 
   return (
     <div className="my-wallet shadow-2xl rounded-lg p-4 h-40">
-    <h2 className="text-green-500 font-semibold">My Wallet</h2>
+    <h2 className="text-fuchsia-800 font-semibold">My Wallet</h2>
     <p className="wallet-balance">Current balance {wallet.balance} ETB</p>
-    <p>Total Rotated {wallet.totalRotated} ETB</p>
-    <p>Bank account {wallet.accountNumber}</p>
+    <p className="text-gray-600">Total Rotated {wallet.totalRotated} ETB</p>
+    <p className="text-gray-600">Bank account {wallet.accountNumber}</p>
     <div className="flex justify-between mt-4">
       <button
-        className="bg-green-500 text-white rounded-lg shadow-md p-2 hover:bg-green-700 w-24"
+        className="bg-lime-500 text-white rounded-lg shadow-md p-2 hover:bg-lime-700 w-24"
         onClick={handleOpenDepositModal}
       >
         Deposit
       </button>
       <button
-        className="bg-pink-600 text-white rounded-lg shadow-md p-2 hover:bg-pink-700 w-24"
+        className="bg-fuchsia-800 text-white rounded-lg shadow-md p-2 hover:bg-fuchsia-950 w-24"
         onClick={handleOpenWithdrawModal}
       >
         Withdraw
       </button>
     </div>
     {showDepositModal && (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="modal-content bg-white w-72 rounded-lg shadow-lg p-4">
+        <div className="inset-0 flex items-center justify-center fixed">
+        <div className="modal-content bg-white w-72 rounded-lg shadow-lg p-4 relative">
+          <h2 className="absolute top-0 left-[-10px] text-green-700">Deposit</h2>
           <h2 className="text-2xl mb-4">Deposit Amount</h2>
           <input
             type="number"
@@ -112,7 +113,7 @@ function Wallet(props) {
           />
           <div className="flex justify-end">
             <button
-              className="bg-pink-600 text-white rounded-lg shadow-md p-2 hover:bg-pink-700 mr-2"
+              className="bg-fuchsia-800 text-white rounded-lg shadow-md p-2 hover:bg-fuchsia-950 mr-2"
               onClick={handleWithdraw}
             >
               Withdraw

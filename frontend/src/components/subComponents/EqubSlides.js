@@ -41,12 +41,12 @@ function EqubSlides(props) {
     <div className="equb-slide shadow-md  shadow-slate-600 w-[370px] h-[220px] rounded-sm flex p-3 items-center justify-between relative bg-white">
       <img src={props.img} alt="Equb" className="w-[170px] h-[170px] rounded-full" />
       <div className="equb-description p-1 ">
-        <h3 className="equb-name text-green-400 font-semibold">{props.equb_name}</h3>
+        <h3 className="equb-name text-lime-500 font-semibold">{props.equb_name}</h3>
         <p className="equb-type m-0 text-gray-500">{props.type}</p>
         <p className="equb-amount m-0">ETB {props.amount} per person</p>
         <p className="equb-round m-0">max {props.max_round} round</p>
         <p className="equb-strting-date m-0">starts at {props.starting_date}</p>
-        <button onClick={handleJoin} className="absolute bg-green-500 text-white rounded-lg shadow-md shadow-black p-1 hover:bg-green-700 w-[60px] bottom-[10px]">Join</button>
+        <button onClick={handleJoin} className="absolute bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-1 transition-colors delay-100 hover:bg-fuchsia-600 w-[60px] bottom-[10px]">Join</button>
       </div>
     </div>
   );

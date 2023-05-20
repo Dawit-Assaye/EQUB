@@ -21,6 +21,7 @@ const loginEquber = async (req, res) => {
     const firstname = equber.first_name;
     const lastname = equber.last_name;
     const wallet_id = equber.wallet_id;
+    const user_id =equber._id
 
     res.status(200).json({
       email,
@@ -31,6 +32,7 @@ const loginEquber = async (req, res) => {
       job,
       city,
       wallet_id,
+      user_id
     });
   } catch (error) {
     res.status(400).json({ error: error.message });

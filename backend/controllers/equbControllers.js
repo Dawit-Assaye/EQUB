@@ -212,9 +212,27 @@ const getEqubs = async (req, res) => {
   }
 };
 
+
+//Get specific equb
+const getEqub = async (req, res) => {
+  const equbId = req.params.id;
+  try {
+    const equb = await Equb.findById(equbId);
+    if (!equb) {
+      return res.status(404).json({ error: "Equb not found" });
+    }
+    res.json(equb);
+  } catch (error) {
+    res.status(400).json({ error: "Error retrieving Equb" });
+  }
+};
+
+
 //Get joined equbs
 const getJoinedEqubs = async (req, res) => {
-  const member_id = req.user._id;
+  const member_id = req.params.id;
+  console.log('hhhhheeeeyyy');
+  console.log("joined person",member_id);
   try {
     const joinedEqubs = await Equb.find({ members: { $in: [member_id] } }).sort({ createdAt: 1 });
     res.status(200).json(joinedEqubs);
@@ -254,4 +272,4 @@ const addSenderToMember=async (req, res) => {
 };
 
 
-module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getJoinedEqubs,addSenderToMember};
+module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember};

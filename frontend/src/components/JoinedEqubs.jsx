@@ -1,24 +1,26 @@
-import { useEffect } from "react";
-import { useAuthContext } from "../hooks/useAuthContext.js";
-import { useFetchJoinedEqubs } from "../hooks/useFetchJoinedEqubs.js";
+// import { useEffect,useState } from "react";
+// import { useAuthContext } from "../hooks/useAuthContext.js";
+// import { useFetchJoinedEqubs } from "../hooks/useFetchJoinedEqubs.js";
 
-const JoinedEqubs = () => {
-  const { user } = useAuthContext();
-  const { joinedEqubs, fetchJoinedEqubs } = useFetchJoinedEqubs(user);
-  
-  useEffect(() => {
-    fetchJoinedEqubs(); // Fetch the joined equbs when the component mounts
-  }, [fetchJoinedEqubs]);
+const JoinedEqubs = ({ onClickJoinedEqub ,joinedEqubs}) => {
+  // const { user } = useAuthContext();
+  // const { joinedEqubs, fetchJoinedEqubs } = useFetchJoinedEqubs();
+  // console.log("user from authContext",user);
+  const handleJoinedEqubClick = (equbId) => {
+    onClickJoinedEqub(equbId);
+  };
+
 
   return (
-    <ul className="w-full pl-32">
+    <ul className="w-full pl-32 mt-6">
     {joinedEqubs.map((equb) => (
       <li
-        key={equb.id}
-        className="w-9/12 flex items-center justify-between shadow-md rounded-lg my-2 px-6 h-20 bg-white text-gray-800 font-semibold hover:bg-gray-100 transition-colors duration-200"
+       onClick={() => handleJoinedEqubClick(equb._id)}
+        key={equb._id}
+        className="w-3/4 flex items-center justify-between shadow-lg rounded-full my-2 px-6 h-20 bg-lime-500 text-gray-800 font-semibold transition-delay duration-300 hover:bg-lime-700 hover:ml-10 hover:w-full "
       >
         <div className="text-lg">{equb.equb_name}</div>
-        <div className="text-green-700">Round {equb.max_round}</div>
+        <div className="text-gray-200">{equb.type},Round {equb.max_round}</div>
       </li>
     ))}
   </ul>
