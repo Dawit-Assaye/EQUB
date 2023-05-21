@@ -3,7 +3,10 @@ const { ObjectId } = require("mongoose").Types;
 
 const EqubCreationRequest = require("../models/equbCreationRequestModel");
 const EqubJoinRequest=require("../models/equbJoinRequestModel")
-const Equb=require("../models/equbModel")
+const Equb = require("../models/equbModel")
+const Equber = require("../models/equberModel")
+const Transaction = require("../models/transactionModel")
+const Wallet=require('../models/walletModel')
 
 // create equbCreateRequest
 const equbCreationRequest = async (req, res) => {
@@ -192,7 +195,7 @@ const createEqub = async (req, res) => {
     );
     
     res.status(200).json({
-      message: "Your equb is created successfuly",
+      message: "Your equb creation request is submited successfuly",
       data: equb,
     });
 
@@ -205,7 +208,7 @@ const createEqub = async (req, res) => {
 //Get equbs
 const getEqubs = async (req, res) => {
   try {
-    const equbs = await Equb.find().sort({ createdAt: 1 }).limit(4);
+    const equbs = await Equb.find().sort({ createdAt: 1 });
     res.status(200).json(equbs);
   } catch (error) {
     res.status(400).json({ error: "cann't get equbs" })
@@ -235,7 +238,10 @@ const getJoinedEqubs = async (req, res) => {
   console.log("joined person",member_id);
   try {
     const joinedEqubs = await Equb.find({ members: { $in: [member_id] } }).sort({ createdAt: 1 });
-    res.status(200).json(joinedEqubs);
+    
+    if (joinedEqubs) {
+      res.status(200).json(joinedEqubs);
+    }
   } catch (error) {
     res.status(400).json({ error: "cann't get joined equbs" })
   }
@@ -271,5 +277,75 @@ const addSenderToMember=async (req, res) => {
   }
 };
 
+// Post pay for equb
 
-module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember};
+const payForEqub = async (req, res) => {
+  const { userId, equbId } = req.body;
+
+  try {
+    
+    // Retrieve the equb and user data from the database
+    const equb = await Equb.findById(new ObjectId(equbId));
+    const equber = await Equber.findById(new ObjectId(userId));
+    const equberWallet = await Wallet.findById(equber.wallet_id)
+    
+    
+    // Check if payment date has passed
+    const currentDate = new Date();
+    if (currentDate > equb.payment_date) {
+      throw new Error("Payment date has passed.");
+    }
+    
+    
+    // Check if user is in refundable equbers list
+    if (equb.refundable_equbers.includes(userId)) {
+      throw new Error("User is in the refundable equbers list.");
+    }
+    
+    // Check if user's balance is sufficient to pay the equb amount
+    if (equberWallet.balance < equb.amount) {
+      throw new Error("Insufficient balance.");
+    }
+
+     // Check if a transaction exists with the provided equb name, equber ID, and round
+     const existingTransaction = await Transaction.findOne({
+      payer_id: userId,
+      payee_id: equbId,
+      round: equb.current_round,
+    });
+
+    if (existingTransaction) {
+      throw new Error("Payment for this round has already been made.");
+    }
+
+    // Decrement user's wallet balance and increment equb's balance
+    equberWallet.balance -= equb.amount;
+    equb.balance += equb.amount;
+    
+    // Push user's ID to the contributed list of the equb
+    equb.contributed_equbers.push(userId);
+
+    // Create the transaction object
+    const transaction = new Transaction({
+      payer_id: userId,
+      payee_id: equbId,
+      payer_name: `${equber.first_name} ${equber.last_name}`,
+      payee_name:equb.equb_name,
+      amount: equb.amount,
+      round: equb.current_round,
+    });
+
+    // Save the updated user, equb, and transaction data
+    await equber.save();
+    await equb.save();
+    await transaction.save();
+    
+    res.status(200).json({ message: "Payment successful." });
+  } catch (error) {
+    console.log('error',error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember,payForEqub};

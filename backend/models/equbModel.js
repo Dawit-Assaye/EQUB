@@ -8,29 +8,95 @@ const equbSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    validate: {
-      validator: async function (name) {
-        const equb = await this.constructor.findOne({
-          equb_name: { $regex: new RegExp(`^${name}$`, "i") },
-        });
-        return !equb;
-      },
-      message: (props) => `${props.value} already exists!`,
+    // validate: {
+    //   validator: async function (name) {
+    //     const equb = await this.constructor.findOne({
+    //       equb_name: { $regex: new RegExp(`^${name}$`, "i") },
+    //     });
+    //     return !equb;
+    //   },
+    //   message: (props) => `${props.value} already exists!`,
+    // },
+  },
+  type: {
+    type: String,
+    required: true
+  },
+  amount: {
+    type: Number,
+    required: true
+  },
+  max_round: {
+    type: Number,
+    required: true
+  },
+  starting_date: {
+    type: Date,
+    required: true
+  },
+  members: [{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Equber"
+  }],
+  winners: [{
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: "Equber"
+  }],
+  contributed_equbers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: "Equber"
+  }],
+  refundable_equbers: [{
+    equber: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: "Equber"
+    },
+    round: {
+      type: Number,
+      required: false
+    }
+  }],
+  status: {
+    type: String,
+    required: true,
+    default: "active"
+  },
+  current_round: {
+    type: Number,
+    required: true,
+    default:1
+  },
+  balance: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  current_winner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: "Equber"
+  },
+  payment_date: {
+    type: Date,
+    required: true,
+    default: function () {
+      const currentDate = new Date();
+      const paymentDate = new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000); // Add 3 days in milliseconds
+      return paymentDate;
     },
   },
-  type: { type: String, required: true },
-  amount: { type: Number, required: true },
-  max_round: { type: Number, required: true },
-  starting_date: { type: Date, required: true },
-  members: [{ type: mongoose.Schema.Types.ObjectId, required: true ,ref:"Equber"}],
-  winners: [{ type: mongoose.Schema.Types.ObjectId, required: false ,ref:"Equber"}],
-  status: { type: String, required: true, default: "active" },
-  current_round: { type: Number, required: true },
-  balance: { type: Number, required: true, default: 0 },
+  lottery_date: {
+    type: Date,
+    required:false
+  }
 });
 
 // // Create a unique index on the equb_name field with case-insensitive collation
-equbSchema.index({ equb_name: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } });
+// equbSchema.index({ equb_name: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } });
 
 // Register a new equb
 equbSchema.statics.createEqub = async function (
@@ -54,6 +120,7 @@ equbSchema.statics.createEqub = async function (
       members: [new ObjectId(sender_id)],// Convert sender_id to ObjectId and add the sender to a member of equb
       current_round: 1, // start with the first round
       balance: 0, // set the initial balance to 0
+      
     });
     return equb;
   } catch (err) {

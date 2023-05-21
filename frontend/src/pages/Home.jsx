@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import { useCreateWallet } from "../hooks/useCreateWallet.js";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 //images
 import dy from "../photo/dy.jpg";
@@ -25,8 +24,11 @@ const Home = () => {
   const [joinedEqubs, setJoinedEqubs] = useState([]);
   const [showCreateWalletModal, setShowCreateWalletModal] = useState(false);
   const [showCreateEqubModal, setShowCreateEqubModal] = useState(false);
-  const navigate = useNavigate();
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredEqubs, setFilteredEqubs] = useState([]);
+
+  const navigate = useNavigate();
 
   //fetching data from the wallet form
   const [walletFormValues, setWalletFormValues] = useState({
@@ -47,7 +49,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-
     // fetching wallet info from database
 
     const fetchWalletInfo = async () => {
@@ -66,7 +67,7 @@ const Home = () => {
       }
     };
 
-    //fetch all equbs 
+    //fetch all equbs
 
     const fetchEqubs = async () => {
       try {
@@ -74,7 +75,16 @@ const Home = () => {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         const equbsData = await response.json();
-        setEqubs(equbsData);
+
+        if (searchQuery) {
+          const filteredEqubsData = equbsData.filter((equb) =>
+            equb.equb_name.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+          setFilteredEqubs(filteredEqubsData);
+        } else {
+          const recentEqubs = equbsData.slice(0, 4); // Get the first 4 recent equbs
+          setEqubs(recentEqubs);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -103,7 +113,8 @@ const Home = () => {
         fetchJoinedEqubs();
       }
     }
-  }, [user, joinedEqubs]);
+  }, [user, joinedEqubs,searchQuery]);
+  
   //handler functions
 
   const handleOpenCreateWalletModal = () => {
@@ -125,7 +136,6 @@ const Home = () => {
   const redirectToJoinedEqubPage = (equbId) => {
     navigate(`/equb/${equbId}`);
   };
-  
 
   // console.log(user.wallet_id);
 
@@ -138,7 +148,6 @@ const Home = () => {
             className="flex flex-col items-center"
             onSubmit={handleCreateWallet}
           >
-      
             {/* Wallet creation form fields */}
             <input
               type="text"
@@ -206,7 +215,7 @@ const Home = () => {
             <div className="h-[80px] flex flex-col justify-center mt-4">
               <div className=" flex flex-col justify-center items-center">
                 <p className="username  text-xl w-[140px] h-10 font-semibold ml-4">
-                  {user.user_id} {user.lastname}
+                  {user.firstname} {user.lastname}
                 </p>
               </div>
               <div className="user-info flex flex-col justify-center items-center ">
@@ -227,8 +236,8 @@ const Home = () => {
               alt="create equb "
               className="w-[800px] h-[400px] rounded-lg contrast-100 saturate-150"
             />
-            <div className="absolute text-black font-semibold text-4xl top-">
-              Create your Own Equb Group !
+            <div className="absolute text-gray-800 font-semibold text-4xl top-">
+              Create your Own Equb Group!
             </div>
             <button
               onClick={handleOpenCreateEqubModal}
@@ -239,7 +248,9 @@ const Home = () => {
           </div>
           <div className="finding-equb w-full flex flex-col justify-center mt-14">
             <div className="home-greet flex items-baseline justify-center mb-2 gap-1">
-              <h2 className="text-fuchsia-800 text-4xl">Hi {user.firstname},</h2>
+              <h2 className="text-fuchsia-800 text-4xl">
+                Hi {user.firstname},
+              </h2>
               <p className="text-xl">Let's Find You An Equb</p>
             </div>
             <div className="search-bar flex justify-center gap-0 content-center items-center">
@@ -247,10 +258,12 @@ const Home = () => {
                 type="text"
                 placeholder="Insert Equb Name Here "
                 className="my-0 hover:border-fuchsia-800 w-[400px]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button className="bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[80px]">
+              {/* <button className="bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[80px]">
                 search
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -293,41 +306,41 @@ const Home = () => {
               Popular Equbs
             </h2>
             <div className="equb-slider justify-center my-4 ml-40">
-              <EqubSlider slides={equbs} />
+            <EqubSlider slides={searchQuery ? filteredEqubs : equbs} />
             </div>
           </div>
         </div>
 
         <div className="main-equbs flex flex-col gap-10">
-        <h2 className="text-lime-500 font-normal text-6xl flex items-center justify-start mt-10 ">
-                Joined Equbs
-              </h2>
-          <div className="joined-equbs -skew-x-12 h-96 bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
-
+          <h2 className="text-lime-500 font-normal text-6xl flex items-center justify-start mt-10 ">
+            Joined Equbs
+          </h2>
+          <div className="joined-equbs -skew-x-12 h-auto bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
             <div className="relative">
               <div
-                 className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
                 style={{ backgroundImage: `url(${joined})` }}
               ></div>
-             
             </div>
             <div className="flex flex-col">
-              <JoinedEqubs  joinedEqubs={joinedEqubs} onClickJoinedEqub={redirectToJoinedEqubPage} />
+              <JoinedEqubs
+                joinedEqubs={joinedEqubs}
+                onClickJoinedEqub={redirectToJoinedEqubPage}
+              />
             </div>
           </div>
           <h2 className="text-lime-500 font-normal text-6xl flex items-center justify-end mt-10 ">
-          Pending Equbs
-              </h2>
+            Pending Equbs
+          </h2>
           <div className="pending-equbs skew-x-12 h-96 bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
             <div className="flex flex-col">
               {/* <PendingEqubs equbs={equbs} /> */}
             </div>
             <div className="relative">
               <div
-             className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
                 style={{ backgroundImage: `url(${joined})` }}
               ></div>
-             
             </div>
           </div>
         </div>

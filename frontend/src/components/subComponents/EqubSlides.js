@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext"
+import { format } from 'date-fns';
+
 
 function EqubSlides(props) {
   const{user}=useAuthContext()
   const [joinRequestSent, setJoinRequestSent] = useState(false);
+  const [isMember, setIsMember] = useState(false);
+
+  
+  const formattedStartingDate = format(
+    new Date(props.starting_date), // Assuming props.starting_date is a valid date string
+    'MMMM d, yyyy' // Customize the date format as needed
+  );
+
+
+  useEffect(() => {
+    // Check if the user is a member of the equb
+    if (props.members.includes(user.user_id)) {
+      setIsMember(true);
+    }
+  }, [props.members, user.user_id]);
 
   const handleJoin = async () => {
     if (joinRequestSent) return; // Prevent multiple requests
@@ -45,8 +62,17 @@ function EqubSlides(props) {
         <p className="equb-type m-0 text-gray-500">{props.type}</p>
         <p className="equb-amount m-0">ETB {props.amount} per person</p>
         <p className="equb-round m-0">max {props.max_round} round</p>
-        <p className="equb-strting-date m-0">starts at {props.starting_date}</p>
-        <button onClick={handleJoin} className="absolute bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-1 transition-colors delay-100 hover:bg-fuchsia-600 w-[60px] bottom-[10px]">Join</button>
+        <p className="equb-strting-date m-0">starts at {formattedStartingDate}</p>
+        {!isMember && !joinRequestSent && (
+          <button
+            onClick={handleJoin}
+            className="absolute bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-1 transition-colors delay-100 hover:bg-fuchsia-600 w-[60px] bottom-[10px]"
+          >
+            Join
+          </button>
+        )}
+        {isMember && <p className="m-0 text-fuchsia-700">You are a member</p>}
+        {joinRequestSent && <p className="m-0 text-lime-500">Join request sent</p>}
       </div>
     </div>
   );

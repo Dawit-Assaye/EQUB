@@ -72,10 +72,11 @@ function Wallet(props) {
       </button>
     </div>
     {showDepositModal && (
-        <div className="inset-0 flex items-center justify-center fixed">
-        <div className="modal-content bg-white w-72 rounded-lg shadow-lg p-4 relative">
-          <h2 className="absolute top-0 left-[-10px] text-green-700">Deposit</h2>
-          <h2 className="text-2xl mb-4">Deposit Amount</h2>
+        <div className="inset-0 flex items-center justify-center fixed z-10">
+          <div className="fixed inset-0 bg-black opacity-25"></div>
+        <div className="modal-content bg-white w-72 rounded-lg shadow-lg p-4 relative z-20">
+          <h2 className="absolute top-2 left-[-20px] bg-lime-500 text-white skew-x-12 shadow-xl">Deposit</h2>
+          <h2 className="text-2xl mb-4 mt-4">Deposit Amount</h2>
           <input
             type="number"
             value={depositAmount}
@@ -85,7 +86,7 @@ function Wallet(props) {
           />
           <div className="flex justify-end">
             <button
-              className="bg-green-500 text-white rounded-lg shadow-md p-2 hover:bg-green-700 mr-2"
+              className="bg-lime-500 text-white rounded-lg shadow-md p-2 hover:bg-lime-700 mr-2"
               onClick={handleDeposit}
             >
               Deposit
@@ -101,9 +102,11 @@ function Wallet(props) {
       </div>
     )}
     {showWithdrawModal && (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="modal-content bg-white w-72 rounded-lg shadow-lg p-4">
-          <h2 className="text-2xl mb-4">Withdraw Amount</h2>
+        <div className="fixed inset-0 flex items-center justify-center z-10">
+          <div className="fixed inset-0 bg-black opacity-25"></div>
+          <div className="modal-content bg-white w-72 rounded-lg shadow-lg p-4 relativez-20">
+          <h2 className="absolute top-2 left-[-20px] bg-fuchsia-700 text-white skew-x-12 shadow-xl">Withdraw</h2>
+          <h2 className="text-2xl mb-4 mt-4">Withdraw Amount</h2>
           <input
             type="number"
             value={withdrawAmount}

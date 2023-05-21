@@ -20,7 +20,7 @@ const JoinedEqubs = ({ onClickJoinedEqub ,joinedEqubs}) => {
         className="w-3/4 flex items-center justify-between shadow-lg rounded-full my-2 px-6 h-20 bg-lime-500 text-gray-800 font-semibold transition-delay duration-300 hover:bg-lime-700 hover:ml-10 hover:w-full "
       >
         <div className="text-lg">{equb.equb_name}</div>
-        <div className="text-gray-200">{equb.type},Round {equb.max_round}</div>
+        <div className="text-gray-200 ">{equb.type},Rounds {equb.max_round}</div>
       </li>
     ))}
   </ul>
