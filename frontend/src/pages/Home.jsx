@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWallet } from '@fortawesome/free-solid-svg-icons'; 
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import { useCreateWallet } from "../hooks/useCreateWallet.js";
@@ -187,8 +190,7 @@ const Home = () => {
             />
             <button
               type="submit"
-              className=" bg-lime-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-lime-700 w-[140px] justify-self-end 
-            "
+              className=" bg-lime-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-lime-700 w-[140px] justify-self-end"
             >
               Create Wallet
             </button>
@@ -256,29 +258,31 @@ const Home = () => {
             <div className="search-bar flex justify-center gap-0 content-center items-center">
               <input
                 type="text"
-                placeholder="Insert Equb Name Here "
+                placeholder="Insert Equb Name Here " 
                 className="my-0 hover:border-fuchsia-800 w-[400px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+              <FontAwesomeIcon icon={faMagnifyingGlass} size='3x' className='text-fuchsia-700 hover:text-fuchsia-900 ml-4'/>
               {/* <button className="bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-green-700 w-[80px]">
                 search
               </button> */}
             </div>
           </div>
         </div>
-        <div className="right grid grid-rows-[150px_150px] gap-10 mt-10">
+        <div className="right mt-10 mr-0 flex items-start justify-center">
           {wallet ? (
             <Wallet wallet={wallet} />
           ) : (
-            <div className="wallet-create-button  bg-gradient-to-t from-green-300 to-indigo-300 bg-opacity-5 shadow-lg shadow-gray-400 rounded-lg px-12 py-14">
+            // <div className="wallet-create-button  bg-gradient-to-t from-lime-300 to-gray-100 bg-opacity-5 shadow-lg shadow-gray-400 rounded-lg px-12 py-14">
               <button
                 onClick={handleOpenCreateWalletModal}
-                className=" bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-fuchsia-950 w-[160px]"
-              >
-                Create Wallet
+                className=" text-black font-semibold rounded-lg  p-2 shadow-lg shadow-gray-300  w-[160px]"
+                >
+                  <FontAwesomeIcon icon={faWallet}  size='5x' className="text-lime-500 hover:text-lime-700 duotone"/>
+                <p>Create Wallet</p>
               </button>
-            </div>
+            // </div>
           )}
 
           {/* <div className="joined-equbs shadow-lg shadow-gray-400 rounded-lg p-4">
@@ -315,11 +319,11 @@ const Home = () => {
           <h2 className="text-lime-500 font-normal text-6xl flex items-center justify-start mt-10 ">
             Joined Equbs
           </h2>
-          <div className="joined-equbs -skew-x-12 h-auto bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
+          <div className="joined-equbs h-96 bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
             <div className="relative">
               <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
-                style={{ backgroundImage: `url(${joined})` }}
+                style={{ backgroundImage: `url(${equb})` }}
               ></div>
             </div>
             <div className="flex flex-col">
@@ -332,14 +336,14 @@ const Home = () => {
           <h2 className="text-lime-500 font-normal text-6xl flex items-center justify-end mt-10 ">
             Pending Equbs
           </h2>
-          <div className="pending-equbs skew-x-12 h-96 bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
+          <div className="pending-equbs h-96 bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
             <div className="flex flex-col">
               {/* <PendingEqubs equbs={equbs} /> */}
             </div>
             <div className="relative">
               <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
-                style={{ backgroundImage: `url(${joined})` }}
+                style={{ backgroundImage: `url(${equb})` }}
               ></div>
             </div>
           </div>

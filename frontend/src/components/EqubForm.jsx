@@ -92,7 +92,7 @@ function EqubForm() {
         }}
       />
 
-      <label htmlFor="starting">Payment lasts at</label>
+      <label htmlFor="starting">Starts at</label>
       <input
             type="date"
             placeholder="Starting date of this equb..."

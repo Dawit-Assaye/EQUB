@@ -1,6 +1,12 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPiggyBank } from '@fortawesome/free-solid-svg-icons'; // Import the solid function
+// import { faFaceTongueMoney } from '@fortawesome/free-solid-svg-icons';
+import { faDice } from '@fortawesome/free-solid-svg-icons';
+import { faPeopleRoof } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext.js";
+import { useNavigate } from "react-router-dom";
 // import { useFetchEqub } from "../hooks/useFetchEqub.js";
 
 import Logo from "../photo/new.jpeg";
@@ -11,6 +17,7 @@ function Equb() {
   const [equb, setEqub] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [payment, setPayment] = useState([])
+  const navigate = useNavigate();
   
   // const { equb, fetchEqub } = useFetchEqub(user, equbId);
 
@@ -96,32 +103,40 @@ function Equb() {
       </p>
 
       {/* Card Section */}
-      <div className="grid grid-cols-[250px_250px_250px] gap-6 mt-8 self-center justify-center">
+      <div className="flex flex-row gap-12 mt-8 self-center justify-center">
         {/* PAY Contribution Card */}
-        <div onClick={() => setShowModal(true)} className="bg-white shadow-lg rounded-lg p-6 cursor-pointer transition-colors delay-50 hover:bg-lime-500 ">
-          <h3 className="pay text-xl font-semibold text-gray-800">
+        <div onClick={() => setShowModal(true)} className="flex flex-col items-center justify-center bg-white shadow-lg rounded-lg px-6  cursor-pointer transition-colors delay-50 ">
+       
+            <FontAwesomeIcon icon={faPiggyBank}  size='6x' className="hover:text-lime-500" />
+          <h3 className="pay text-xl font-semibold text-gray-800 mt-2">
+            {/* <FontAwesomeIcon icon={faFacebook} /> */}
             PAY Contribution
           </h3>
           <p className="text-gray-600 mt-2">
-            Pay for this round
+          Pay for this round
           </p>
         </div>
 
         {/* LOTTERY Attend Card */}
-        <div className="bg-white shadow-lg rounded-lg p-6 cursor-pointer transition-colors delay-50 hover:bg-fuchsia-500">
-          <h3 className="text-xl font-semibold text-gray-800">
-            LOTTERY Attend
+        <div className="flex flex-col items-center justify-center bg-white shadow-lg rounded-lg p-4 cursor-pointer transition-colors delay-50 "
+        onClick={() => navigate(`/equb/${equbId}/lottery`)}>
+          {/* <FontAwesomeIcon icon={faFaceTongueMoney}  size='6x' className="hover:text-fuchsia-600" /> */}
+          <FontAwesomeIcon icon={faDice} size="6x" className="hover:text-fuchsia-600" />
+
+          <h3 className="text-xl font-semibold text-gray-800 mt-4">
+            LOTTERY
           </h3>
           <p className="text-gray-600 mt-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+           Attend lottery for this round
           </p>
         </div>
 
         {/* Equb Members Card */}
-        <div className="bg-white shadow-lg rounded-lg p-6 cursor-pointer transition-colors delay-50 hover:bg-teal-500">
-          <h3 className="text-xl font-semibold text-gray-800">Equb Members</h3>
+        <div className="flex flex-col items-center justify-center bg-white shadow-lg rounded-lg p-6 cursor-pointer transition-colors delay-50 ">
+        <FontAwesomeIcon icon={faPeopleRoof} size="6x" className="hover:text-teal-500" />
+          <h3 className="text-xl font-semibold text-gray-800 mt-2">Equb Members</h3>
           <p className="text-gray-600 mt-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Discover peers
           </p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 const express=require('express')
 //controller functions
-const {equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,getEqubs,getEqub,getJoinedEqubs,addSenderToMember, updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,payForEqub}=require('../controllers/equbControllers')
+const {equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,getEqubs,getEqub,getJoinedEqubs,addSenderToMember, updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,payForEqub,getWinner,getCandidates}=require('../controllers/equbControllers')
 const requireAuth=require('../middlewares/requireAuth');
 
 
@@ -46,7 +46,13 @@ router.get('/joined/:id',getJoinedEqubs)
 router.post('/add/members', addSenderToMember)   
 
 //Post pay for equb
-router.post('/pay',payForEqub)
+router.post('/pay', payForEqub)
+
+//Get winner of the equb
+router.get('/winner/:id', getWinner)
+
+//Get candidates of the equb to that round
+router.get('/candidates/:id',getCandidates)
 
 //Put Assign the role of the sender to a member of the equity
 

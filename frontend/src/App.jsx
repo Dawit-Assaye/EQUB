@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
+import Lottery from "./pages/Lottery";
 // import Footer from "./components/Footer";
 import Equb from "./pages/Equb";
 
@@ -61,7 +62,7 @@ function App() {
           // element={user ? <Home /> : <Navigate to="/login"/> }
           />
           <Route path="/equb/:equbId" element={user? <Equb />: <Navigate to="/login"/>} />
-
+          <Route path="/equb/:equbId/lottery" element={user ? <Lottery /> : <Navigate to="/login"/>} />
       
         </Routes>
       </div>

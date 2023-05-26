@@ -45,7 +45,19 @@ const PageDisplay = () => {
 /////DATA SENDING TO BE REGISTERED
 
 const handleSubmit=async(e)=>{
-    e.preventDefault();
+  e.preventDefault();
+    // Check if age is within valid range
+    if (formData.age < 18 || formData.age > 90) {
+      alert("Age must be between 18 and 90.");
+      return;
+    }
+
+    
+  // Check if password and confirm password match
+  if (  formData.password !==  formData.confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
     console.log(formData.email,formData.password)
     await signup(
       formData.username,
@@ -60,6 +72,7 @@ const handleSubmit=async(e)=>{
       formData.city,
       formData.region
   )
+  alert(error)
 }
 
 return(

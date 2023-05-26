@@ -347,5 +347,45 @@ const payForEqub = async (req, res) => {
   }
 };
 
+//Get winner of the equb
+const getWinner = async (req, res) => {
+  const equbId = req.params.id;
+  try {
+    const equb = await Equb.findById(new ObjectId(equbId));//populat("current_winner")
+    const winnerId = equb.current_winne
+    //equb.current_winner.firstName for frontend
+    const winner=await Equber.findById(new ObjectId(winnerId))
+    if (winner) {
+      res.status(200).json({
+        message: `The winner is ${winner.first_name}`,
+        data: winner,
+      });
+ }
+  } catch (error) {
+    console.log('error',error);
+    res.status(400).json({ error: error.message });
+  }
+}
 
-module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember,payForEqub};
+//get candidatess for an equb
+const getCandidates = async (req, res) => {
+  const equbId = req.params.id;
+  try {
+    const equb = await Equb.findById(new ObjectId(equbId));
+    const candidateIds = equb.contributed_equbers;
+    const candidates = await Promise.all(
+      candidateIds.map(async (candidateId) => {
+        return await Equber.findById(new ObjectId(candidateId));
+      })
+    );
+    if (candidates) {
+      res.status(200).json(candidates);
+    }
+  } catch (error) {
+    console.log('error', error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember,payForEqub,getWinner,getCandidates};

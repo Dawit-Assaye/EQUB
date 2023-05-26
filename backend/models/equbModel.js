@@ -84,15 +84,19 @@ const equbSchema = new Schema({
     type: Date,
     required: true,
     default: function () {
-      const currentDate = new Date();
-      const paymentDate = new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000); // Add 3 days in milliseconds
+      const paymentDate = new Date(this.starting_date.getTime() + 1 * 24 * 60 * 60 * 1000); // Add 1 day in milliseconds
       return paymentDate;
     },
   },
   lottery_date: {
     type: Date,
-    required:false
-  }
+    required: true,
+    default: function () {
+      const lotteryDate = new Date(this.starting_date.getTime() + 3 * 12 * 60 * 60 * 1000); // Add 1 day and half in milliseconds
+      return lotteryDate;
+    },
+  },
+  
 });
 
 // // Create a unique index on the equb_name field with case-insensitive collation
