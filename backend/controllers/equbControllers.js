@@ -307,17 +307,17 @@ const payForEqub = async (req, res) => {
       throw new Error("Insufficient balance.");
     }
 
-     // Check if a transaction exists with the provided equb name, equber ID, and round
+    // Check if a transaction exists with the provided equb name, equber ID, and round
      const existingTransaction = await Transaction.findOne({
       payer_id: userId,
       payee_id: equbId,
       round: equb.current_round,
     });
-
+    
     if (existingTransaction) {
       throw new Error("Payment for this round has already been made.");
     }
-
+    
     // Decrement user's wallet balance and increment equb's balance
     equberWallet.balance -= equb.amount;
     equb.balance += equb.amount;
@@ -339,6 +339,7 @@ const payForEqub = async (req, res) => {
     await equber.save();
     await equb.save();
     await transaction.save();
+    await equberWallet.save();
     
     res.status(200).json({ message: "Payment successful." });
   } catch (error) {
@@ -352,7 +353,7 @@ const getWinner = async (req, res) => {
   const equbId = req.params.id;
   try {
     const equb = await Equb.findById(new ObjectId(equbId));//populat("current_winner")
-    const winnerId = equb.current_winne
+    const winnerId = equb.last_winner
     //equb.current_winner.firstName for frontend
     const winner=await Equber.findById(new ObjectId(winnerId))
     if (winner) {

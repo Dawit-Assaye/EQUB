@@ -75,7 +75,7 @@ const equbSchema = new Schema({
     required: true,
     default: 0
   },
-  current_winner: {
+  last_winner: {
     type: mongoose.Schema.Types.ObjectId,
     required: false,
     ref: "Equber"
@@ -96,6 +96,14 @@ const equbSchema = new Schema({
       return lotteryDate;
     },
   },
+  last_lottery_date: {
+    type: Date,
+    required: true,
+    default: function () {
+      const lastLotteryDate = new Date(this.lottery_date.getTime() - 3 * 24 * 60 * 60 * 1000);//minus 3 days from the current lottery date
+      return lastLotteryDate;
+    }
+  }
   
 });
 

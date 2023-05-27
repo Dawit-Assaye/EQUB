@@ -50,6 +50,7 @@ function Equb() {
     
     try {
       const userId = user.user_id
+      console.log("PAYMENT CONFIRMATION",userId,equbId)
   const response = await fetch(`/api/equb/pay`, {
     method: "POST",
     headers: {

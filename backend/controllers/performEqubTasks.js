@@ -28,10 +28,11 @@ async function performEqubTasks() {
       // } = equb;
       
       if (equb.status !== "completed") {
-
+        
         // Check if it's the payment lasting date
         const today = new Date();
         const paymentDateobj = new Date(equb.payment_date);
+        console.log('THIS IS MY EQUB',paymentDateobj.toDateString());
         if (paymentDateobj.toDateString() === today.toDateString()) {
           // Updating the members by including only the contributed equbers for the first round
           if (equb.current_round === 1) {
@@ -59,7 +60,7 @@ async function performEqubTasks() {
             
             if (winner) {
               // Update equb fields
-              equb.current_winner = winner;
+              equb.last_winner = winner;
               equb.winners.push(winner);
               equb.status =
               equb.contributed_equbers.length === equb.winners.length
@@ -83,7 +84,6 @@ async function performEqubTasks() {
 
         // Update equb in the database
         await equb.save()
-        console.log('THIS IS MY EQUB');
       }
     }
     
