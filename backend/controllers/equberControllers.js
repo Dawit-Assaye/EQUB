@@ -73,10 +73,11 @@ const signupEquber = async (req, res) => {
     const token = await createToken(equber._id);
     const firstname = equber.first_name;
     const lastname = equber.last_name;
+    const user_id =equber._id
 
     res
       .status(200)
-      .json({ email, username, token, firstname, lastname, job, city });
+      .json({ email, username, token, firstname, lastname, job, city,user_id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -89,7 +90,7 @@ const getEquber = async (req, res) => {
     res.status(200).json(equber);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: err.message });
   }
 };
 

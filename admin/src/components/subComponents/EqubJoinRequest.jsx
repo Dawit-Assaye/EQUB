@@ -1,7 +1,8 @@
 import { useState,useEffect } from "react";
 import SenderDetails from "./SenderDetails"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { format } from "date-fns";
+// import { format } from "date-fns";
+import { DateTime } from 'luxon';
 
 
 function EqubJoinRequest(props) {
@@ -134,9 +135,12 @@ function EqubJoinRequest(props) {
       console.error(err);
     }
   };
-
+console.log("WHATTTTT",equb_starting_date)
    // Format the starting date using date-fns
-   const formattedStartDate = format(new Date(equb_starting_date), "MMMM dd, yyyy");
+  const paymentDate = DateTime.fromISO(equb_starting_date);
+  const startReadableDate = paymentDate.toLocaleString(DateTime.DATE_FULL);
+  // const formattedStartDate = format(new Date(equb_starting_date), "MMMM dd, yyyy");
+  
   return (
     // equb_id as a key for each equbs
     <tr className="border-2">
@@ -144,7 +148,7 @@ function EqubJoinRequest(props) {
     <td className="px-8 py-4 whitespace-nowrap">{equb_type}</td>
     <td className="px-8 py-4 whitespace-nowrap">{equb_amount}</td>
     <td className="px-8 py-4 whitespace-nowrap">{equb_round}</td>
-    <td className="px-8 py-4 whitespace-nowrap">{formattedStartDate}</td>
+    <td className="px-8 py-4 whitespace-nowrap">{startReadableDate}</td>
     <td className="px-8 py-4 whitespace-nowrap">
       <div onClick={toggleSenderDetails} className="cursor-pointer hover:text-purple-800 hover:text-lg">
         {sender ? `From ${sender.first_name} ${sender.last_name}` : 'Loading...'}

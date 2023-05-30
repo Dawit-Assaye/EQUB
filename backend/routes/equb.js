@@ -1,6 +1,6 @@
 const express=require('express')
 //controller functions
-const {equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,getEqubs,getEqub,getJoinedEqubs,addSenderToMember, updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,payForEqub,getWinner,getCandidates}=require('../controllers/equbControllers')
+const {equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,getEqubWinnerPaymentRequests,deleteEqubWinnerPaymentRequests,updateEqubWinnerPaymentRequestsStatus,equbWinnerPayment,createEqub,getEqubs,getEqub,getJoinedEqubs,addSenderToMember, updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,payForEqub,getWinner,getCandidates}=require('../controllers/equbControllers')
 const requireAuth=require('../middlewares/requireAuth');
 
 
@@ -53,6 +53,18 @@ router.get('/winner/:id', getWinner)
 
 //Get candidates of the equb to that round
 router.get('/candidates/:id',getCandidates)
+
+//Get equb winner payment requests
+router.get('/winner/payment/requests', getEqubWinnerPaymentRequests)
+
+//delete Equb Winner Payment Requests
+router.delete('/winner/payment/requests/:id',deleteEqubWinnerPaymentRequests)
+
+//Update creation request's status
+router.put('/winner/payment/requests/:id', updateEqubWinnerPaymentRequestsStatus)  
+
+//post pay equb winner
+router.post('/winner/payment', equbWinnerPayment)  
 
 //Put Assign the role of the sender to a member of the equity
 

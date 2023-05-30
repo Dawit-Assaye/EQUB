@@ -1,19 +1,20 @@
 import { useAuthContext } from "../hooks/useAuthContext.js";
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { DateTime } from 'luxon';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { DateTime } from "luxon";
 // import WheelComponent from 'react-wheel-of-prizes';
-import LotteryWheel from './LotteryWheel.js'
+import LotteryWheel from "./LotteryWheel.js";
 
 function Lottery() {
   const { user } = useAuthContext();
   const { equbId } = useParams();
-  const [winner, setWinner] = useState('');
+  const [winner, setWinner] = useState("");
   const [candidates, setCandidates] = useState([]);
-  const [lotteryDate, setLotteryDate] = useState(''); 
-  const [lastLotteryDate, setLastLotteryDate] = useState('');
-  const[equb,setEqub]=useState('')
+  const [lotteryDate, setLotteryDate] = useState("");
+  const [lastLotteryDate, setLastLotteryDate] = useState("");
+  const [equb, setEqub] = useState("");
 
+  console.log("WinnerDAta", winner);
 
   useEffect(() => {
     const fetchEqubData = async (equbId) => {
@@ -23,8 +24,8 @@ function Lottery() {
         });
         const equbData = await response.json();
         setLotteryDate(equbData.lottery_date);
-        setLastLotteryDate(equbData.last_lottery_date)
-        setEqub(equbData)
+        setLastLotteryDate(equbData.last_lottery_date);
+        setEqub(equbData);
       } catch (error) {
         console.error(error);
       }
@@ -36,7 +37,7 @@ function Lottery() {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         const winnerData = await response.json();
-        setWinner(winnerData);
+        setWinner(winnerData.data);
       } catch (error) {
         console.error(error);
       }
@@ -70,48 +71,53 @@ function Lottery() {
   //   return color;
   // };
 
-  console.log("LOTTERY NOW", lotteryDate)
+  console.log("LOTTERY NOW", lotteryDate);
 
   const handleCelebration = () => {
-  
-      return (
-        <div className="text-white">
-          <p>The last lottery winner was {winner.first_name}.</p>
-          <p>Stay tuned for the next lottery announcement.</p>
-        </div>
-      );
-    
+    return (
+      <div className="text-white">
+        <p>The last lottery winner was {winner.first_name}.</p>
+        <p>Stay tuned for the next lottery announcement.</p>
+      </div>
+    );
   };
 
   const renderAnnouncement = () => {
     const today = new Date();
     // const lotteryDateObj = new Date(lotteryDate);
-    const lastLotteryDateObj=new Date(lastLotteryDate)
+    const lastLotteryDateObj = new Date(lastLotteryDate);
     const lotteryDateTime = DateTime.fromISO(lotteryDate);
-
+    const lotteryDateObj = new Date(lotteryDate);
 
     if (today.toDateString() === lastLotteryDateObj.toDateString()) {
       if (candidates.length !== 0) {
-      const candidatesArray=candidates.map(candidate => candidate.first_name)
-      console.log(candidatesArray)
+        const candidatesArray = candidates.map(
+          (candidate) => candidate.first_name
+        );
+        console.log("CAndidatessss", candidatesArray);
+        console.log(winner.first_name);
         return (
           <div className="flex flex-col items-center justify-content-center p-0 m-6">
             <p>Day To Know The Lucky One</p>
-            <LotteryWheel candidates={candidatesArray} user={user} winner={winner} />
+            <LotteryWheel
+              candidates={candidatesArray}
+              user={user}
+              winner={winner.first_name}
+            />
           </div>
         );
       }
-    }else if ( equb.current_round === 1) {
-      return (
-        <p className="text-white">This equb has not yet started.</p>
-      );
-    } else if ((today-lastLotteryDateObj)>=3) {
-      const lotteryDistance = lotteryDateTime.toRelative({ style: 'long' });
+    } else if (equb.current_round === 1) {
+      return <p className="text-white">This equb has not yet started.</p>;
+    } else if (today - lastLotteryDateObj >= 3) {
+      const lotteryDistance = lotteryDateTime.toRelative({ style: "long" });
 
       return (
-        <p className="text-white">The next lottery will be held {lotteryDistance}.</p>
+        <p className="text-white">
+          The next lottery will be held {lotteryDistance}.
+        </p>
       );
-    }else {
+    } else {
       return handleCelebration();
     }
   };
@@ -119,7 +125,7 @@ function Lottery() {
   return (
     <div className="bg-gray-900 mx-11 px-11 min-h-screen mb-32 pb-9 rounded-lg flex ">
       <div className="container px-4 mb-32 flex flex-col items-center justify-center rounded-lg bg-gray-800 shadow-md shadow-lime-500">
-        <h1 className="text-3xl font-bold text-lime-500 mb-4 ">Equb Lottery</h1>
+        <h1 className="text-3xl font-bold text-lime-500 mb-4 ">Equb Wheel</h1>
         <div className="bg-gray-700 p-4 rounded-lg shadow-md shadow-lime-300 border-lime-500 border-2 hover:border-lime-500">
           {renderAnnouncement()}
         </div>

@@ -59,6 +59,7 @@ const AdminLogin = () => {
         value={key}
         placeholder="Registeration code..."
         id="key"
+        autoComplete="off"
       />
       <button className="bg-purple-700" disabled={isLoading}>Signup</button>
       {error && <div className="error">{error}</div>}

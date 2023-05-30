@@ -6,7 +6,8 @@ const EqubJoinRequest=require("../models/equbJoinRequestModel")
 const Equb = require("../models/equbModel")
 const Equber = require("../models/equberModel")
 const Transaction = require("../models/transactionModel")
-const Wallet=require('../models/walletModel')
+const Wallet=require('../models/walletModel');
+const EqubPayWinner = require("../models/equbPayWinnerModel");
 
 // create equbCreateRequest
 const equbCreationRequest = async (req, res) => {
@@ -288,13 +289,24 @@ const payForEqub = async (req, res) => {
     const equber = await Equber.findById(new ObjectId(userId));
     const equberWallet = await Wallet.findById(equber.wallet_id)
     
+   // Check if the last payment date is equal to today
+   const lastPaymentDate = equb.last_payment_date;
+   const currentDate = new Date();
+   const isLastPaymentToday = lastPaymentDate.toDateString() === currentDate.toDateString();
+
+   if (isLastPaymentToday) {
+     throw new Error("Last payment date is equal to today. Payment is not allowed.");
+   }
+    
+    // Check if equb status is not completed
+    if (equb.status === "completed") {
+      throw new Error("Payment is not allowed for completed equbs.");
+    }
     
     // Check if payment date has passed
-    const currentDate = new Date();
     if (currentDate > equb.payment_date) {
       throw new Error("Payment date has passed.");
     }
-    
     
     // Check if user is in refundable equbers list
     if (equb.refundable_equbers.includes(userId)) {
@@ -372,7 +384,7 @@ const getCandidates = async (req, res) => {
   const equbId = req.params.id;
   try {
     const equb = await Equb.findById(new ObjectId(equbId));
-    const candidateIds = equb.contributed_equbers;
+    const candidateIds = equb.last_contributed_equbers;
     const candidates = await Promise.all(
       candidateIds.map(async (candidateId) => {
         return await Equber.findById(new ObjectId(candidateId));
@@ -387,5 +399,109 @@ const getCandidates = async (req, res) => {
   }
 };
 
+//get Equb winner payment requests 
+const getEqubWinnerPaymentRequests = async (req, res) => {
+  try {
+    const equbPayWinnerRequests = await EqubPayWinner.find();
+    res.status(200).json(equbPayWinnerRequests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
-module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember,payForEqub,getWinner,getCandidates};
+
+//delete equbPayWinnerRequests
+const deleteEqubWinnerPaymentRequests = async (req, res) => {
+  
+  try {
+    // Find the request by ID and delete
+    const request = await EqubPayWinner.findByIdAndDelete(req.params.id);
+
+    // If the request is not found, return an error response
+    if (!request) {
+      return res.status(404).json({ error: 'Request not found' });
+    }
+
+    // Return a success response
+    res.json({ message: 'Request deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while deleting the request' });
+  }
+};
+
+
+//update equbPayWinnerRequests status
+const updateEqubWinnerPaymentRequestsStatus = async (req, res) => {
+  const { status } = req.body;
+  try {
+    const equbPayWinnerRequests = await EqubPayWinner.findByIdAndUpdate(req.params.id, { $set: { status:status } }, { new: true });
+    if (!equbPayWinnerRequests) {
+      return res.status(404).json({ error: 'Equb not found' });
+    }
+    res.status(200).json(equbPayWinnerRequests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ err: 'Internal server error' });
+  }
+}
+
+const equbWinnerPayment = async (req, res) => {
+  const { equbId, currentRound, amountOfMoney, recipientEquberId } = req.body;
+  try {
+    // Search for the equb by ID
+    const equb = await Equb.findById(equbId);
+    if (!equb) {
+      console.log('NOt Equb HERE');
+      return res.status(404).json({ error: 'Equb not found' });
+    }
+
+    // Search for the equber by ID
+    const equber = await Equber.findById(recipientEquberId);
+    if (!equber) {
+      console.log('NOt Equber HERE');
+      return res.status(404).json({ error: 'Equber not found' });
+    }
+
+    
+    // Update the equber's wallet balance
+    const walletId = equber.wallet_id; // Assuming the equber object has a walletId property
+    const wallet = await Wallet.findById(walletId);
+    if (!wallet) {
+      console.log('NOt Wallet HERE');
+      return res.status(404).json({ error: 'Wallet not found' });
+    }
+
+    // Update the equb's balance
+    equb.balance -= amountOfMoney;
+    
+    wallet.balance += amountOfMoney;
+
+    // Save the updated equb and wallet
+    await equb.save();
+    await wallet.save();
+
+    // Create a new transaction object
+    const transaction = new Transaction({
+      payer_name: equb.equb_name,
+      payer_id: equb._id,
+      round: currentRound,
+      amount: amountOfMoney,
+      payee_id: equber._id,
+      payee_name: equber.first_name
+    });
+
+
+    // Save the transaction
+    await transaction.save();
+
+    res.status(200).json({ message: 'Payment successful' });
+  } catch (error) {
+    console.log('Error', error);
+    res.status(500).json({ error: 'Unable to pay winner' });
+  }
+};
+
+
+module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,getEqubWinnerPaymentRequests,deleteEqubWinnerPaymentRequests,updateEqubWinnerPaymentRequestsStatus,equbWinnerPayment,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember,payForEqub,getWinner,getCandidates};

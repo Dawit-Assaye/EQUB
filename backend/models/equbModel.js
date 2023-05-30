@@ -92,7 +92,7 @@ const equbSchema = new Schema({
     type: Date,
     required: true,
     default: function () {
-      const lotteryDate = new Date(this.starting_date.getTime() + 3 * 12 * 60 * 60 * 1000); // Add 1 day and half in milliseconds
+      const lotteryDate = new Date(this.starting_date.getTime() + 2 * 24 * 60 * 60 * 1000); // Add 1 day and half in milliseconds
       return lotteryDate;
     },
   },
@@ -111,7 +111,12 @@ const equbSchema = new Schema({
       const lastPaymentDate = new Date(this.payment_date.getTime() - 24 * 60 * 60 * 1000); // Subtract 1 day in milliseconds
       return lastPaymentDate;
     }
-  }
+  },
+  last_contributed_equbers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: "Equber"
+  }],
   
 });
 

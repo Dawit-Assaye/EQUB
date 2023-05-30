@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import EqubCreationRequests from "../components/EqubCreationsRequests.jsx"
 import EqubJoinRequests from "../components/EqubJoinRequests.jsx"
+import PayWinner from "../components/PayWinner.jsx"
+
 
 //images
 import dy from "../photo/dy.jpg";
@@ -41,7 +43,7 @@ function AdminHome() {
         <div className="admin-buttons flex flex-col py-4  justify-center w-full">
           <button  onClick={() => handleButtonClick('creation')}  className={`bg-${activeButton === 'creation' ? 'white':'gray-800'}  text-${activeButton === 'creation' ? 'black':'white'} p-2 w-full border-t-[1px] border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>Equb creation requests</button>
           <button  onClick={() => handleButtonClick('joining')}  className={`bg-${activeButton === 'joining' ? 'white':'gray-800'}  text-${activeButton === 'joining' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>Equb joinig requests</button>
-          <button  onClick={() => handleButtonClick('payWinner')}  className={`bg-${activeButton === 'payWinner' ? 'white':'gray-800'}  text-${activeButton === 'payWinner' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>Paywinner requests</button>
+          <button  onClick={() => handleButtonClick('payWinner')}  className={`bg-${activeButton === 'payWinner' ? 'white':'gray-800'}  text-${activeButton === 'payWinner' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>Winner payment requests</button>
           <button  onClick={() => handleButtonClick('equbers')}  className={`bg-${activeButton === 'equbers' ? 'white':'gray-800'}  text-${activeButton === 'equbers' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>All Equbs</button>
           <button  onClick={() => handleButtonClick('equbs')}  className={`bg-${activeButton === 'equbs' ? 'white':'gray-800'}  text-${activeButton === 'equbs' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>All Equbers</button>
       </div>
@@ -51,8 +53,9 @@ function AdminHome() {
         <div className="admin-bottom pl-20 pt-4">
         {activeButton === 'creation' && <EqubCreationRequests/>}
         {activeButton === 'joining' && <EqubJoinRequests />}
-        {/* {activeButton === 'payWinner' && <PayWinner />}
-        {activeButton === 'equbs' && <Equbs />}
+        {activeButton === 'payWinner' && <PayWinner />}
+          
+        {/*{activeButton === 'equbs' && <Equbs />}
         {activeButton === 'equbers' && <Eqbers />} */}
 
       </div>

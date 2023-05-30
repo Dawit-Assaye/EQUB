@@ -16,17 +16,22 @@ export class LotteryWheel extends Component {
       show: false,
     };
   }
-  
+
   render() {
-    const user = this.props.user
-    const candidates=this.props.candidates
+    const user = this.props.user;
+    const candidates = this.props.candidates;
+    const winnerName = this.props.winner;
+    // Find the index of the winnerName in the candidates array
+    const winningSegmentIndex = candidates.indexOf(String(winnerName));
+
     console.log("Lottery Wheel", this.props.candidates);
-    console.log('Wheel user',this.props.user);
+    console.log("Wheel user", this.props.user);
+    console.log("Wheel winner", candidates[winningSegmentIndex]);
     // let objIndex = {
-    //   "Iphone13promax": 1, 
-    //   "Bosesurroundspeakers": 2, 
-    //   "Samsung65-InchCrystalUHD4KFlatSmartTV": 3, 
-    //   "MacBookAirMGN6314”Display,AppleM1ChipWith8-Core": 4, 
+    //   "Iphone13promax": 1,
+    //   "Bosesurroundspeakers": 2,
+    //   "Samsung65-InchCrystalUHD4KFlatSmartTV": 3,
+    //   "MacBookAirMGN6314”Display,AppleM1ChipWith8-Core": 4,
     //   "KIATELLURIDE2022": 5,
     //   "SAMSUNGFRONTLOADWASHINGMACHINE16KG": 6,
     //   "10GRAMSGOLDCOIN": 7,
@@ -54,7 +59,7 @@ export class LotteryWheel extends Component {
     //   }, 5000);
     // };
     const onFinished = () => {
-      const winner = candidates[1]; // Predefined winner
+      const winner = candidates[winningSegmentIndex]; // Predefined winner
       this.setState({ portal: false, show: winner });
     };
     return (
@@ -65,36 +70,57 @@ export class LotteryWheel extends Component {
           justifyContent: "center",
           paddingTop: "5px",
           paddingBottom: "5px",
-        //   background: `url(${IMAGES.background})`
-      }}
+          //   background: `url(${IMAGES.background})`
+        }}
       >
-       
-        {this.state.show && user.firstname === candidates[1] && <Confetti width={1600} height={1019} initialVelocityY={Number | { min: 1, max: 10 }} />} 
+        {this.state.show &&
+          user.firstname === candidates[winningSegmentIndex] && (
+            <Confetti
+              width={1600}
+              height={1019}
+              initialVelocityY={Number | { min: 1, max: 10 }}
+            />
+          )}
+
         <WheelComponent
           segments={candidates}
           segColors={segColors}
-          winningSegment={candidates[1]} 
+          winningSegment={candidates[winningSegmentIndex]}
           onFinished={(winner) => onFinished(winner)}
           primaryColor="black"
           contrastColor="white"
           buttonText="Draw Equb"
           isOnlyOnce={true}
           size={10}
-          
-          
-          />
+        />
         {this.state.portal ? <TrPortal /> : null}
         {this.state.show && (
           // modal
           <div className="box rounded-md">
-            <div className="imageBox">
-            </div>
-            <h2 className="titleWin text-fuchsia-700 flex items-center gap-2">
-            {user.firstname===candidates[1] ? `CONGRATULATIONS!!! YOU HAVE WON THIS ROUND ${<p className="text-2xl ">{this.state.show}!!!</p>} Please visit the admin's office to fulfill some legality issues.` :"THE WINNER OF THIS ROUND IS"} <p className="text-2xl ">{this.state.show}!!!</p> 
+            <div className="imageBox"></div>
+            <h2 className="titleWin text-black">
+              {user.firstname === candidates[winningSegmentIndex] ? (
+                <span>
+                  CONGRATULATIONS!!! YOU HAVE WON THIS ROUND{" "}
+                  <span className="text-2xl text-lime-500">
+                    {this.state.show}!!!
+                  </span>{" "}
+                  PLEASE VISIT THE EQUB OFFICE IN YOUR AREA TO FULFILL SOME
+                  LEGALITY ISSUES AND TAKE YOUR MONEY.
+                </span>
+              ) : (
+                <span>
+                  THE WINNER OF THIS ROUND IS{" "}
+                  <span className="text-2xl text-lime-500">
+                    {this.state.show}!!!
+                  </span>
+                </span>
+              )}
             </h2>
+
             <div className="closeContainer">
               <button
-               className=" bg-lime-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-lime-700 w-[140px] justify-self-end"
+                className=" bg-lime-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-lime-700 w-[140px] justify-self-end"
                 onClick={() => this.setState({ show: false })}
               >
                 OK

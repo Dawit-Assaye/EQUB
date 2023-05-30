@@ -8,7 +8,7 @@ const WheelComponent = ({
   primaryColor,
   contrastColor,
   buttonText,
-  isOnlyOnce
+  isOnlyOnce,
 }) => {
   let currentSegment = "";
   let isStarted = false;
@@ -20,8 +20,8 @@ const WheelComponent = ({
   const size = 150;
   let canvasContext = null;
   let maxSpeed = Math.PI / `${segments.length}`;
-  const upTime = segments.length * 100;
-  const downTime = segments.length * 1000;
+  const upTime = segments.length * 1000;
+  const downTime = segments.length * 800;
   let spinStart = 0;
   let frames = 0;
   const centerX = 155;
@@ -207,7 +207,7 @@ const WheelComponent = ({
       width="320"
       height="320"
       style={{
-        pointerEvents: isFinished && !isOnlyOnce ? "none" : "auto"
+        pointerEvents: isFinished && !isOnlyOnce ? "none" : "auto",
       }}
     />
   );
