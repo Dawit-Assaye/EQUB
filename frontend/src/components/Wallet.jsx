@@ -55,7 +55,7 @@ function Wallet(props) {
   };
 
   return (
-    <div className="my-wallet shadow-2xl rounded-lg p-4 h-40">
+    <div className="my-wallet shadow-2xl rounded-lg p-4 h-[180px] w-[260px]">
   <h2 className="text-fuchsia-800 font-semibold">My Wallet</h2>
   <p className="wallet-balance">
   <FontAwesomeIcon icon={faSackDollar} className="mr-2 text-fuchsia-700" />

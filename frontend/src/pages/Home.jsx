@@ -238,15 +238,15 @@ const Home = () => {
               alt="create equb "
               className="w-[800px] h-[400px] rounded-lg contrast-100 saturate-150"
             /> */}
-            <div className="text-gray-800 font-semibold text-4xl mb-4 self-center">
-              Create your Own Equb Group!
-            </div>
+            <div className="text-gray-800 font-semibold text-4xl mb-4 mt-16 self-center">
+              Create your Own Equb Group Here And Empower Your Future!
             <button
               onClick={handleOpenCreateEqubModal}
-              className=" bg-lime-500 text-white rounded-lg shadow-md shadow-black p-2 hover:bg-lime-700 w-[140px] bottom-2"
+              className=" bg-lime-500 text-xl  p-2 rounded-full hover:bg-lime-700 hover:text-2xl hover:text-white  bottom-2"
             >
               Create Equb
             </button>
+            </div>
           </div>
         </div>
         <div className="right mt-10 mr-0 flex items-start justify-end">
@@ -269,7 +269,7 @@ const Home = () => {
           )}
         </div>
       </div>
-      <div className="main-middle mx-24  mb-32">
+      <div className="main-middle mx-24  mb-32 mt-20">
         <div className="justify-center">
           <div className="popular-equbs  grid grid-rows[50px_200px] mt-4 ">
             <div className="finding-equb w-full flex flex-col justify-center mt-6 mb-6">
@@ -310,12 +310,12 @@ const Home = () => {
           <h2 className="text-lime-500 font-normal text-6xl flex items-center justify-start mt-10 ">
             Joined Equbs
           </h2>
-          <div className="joined-equbs h-96 bg-white grid grid-cols-2 gap-10 shadow-lg shadow-green-200">
+          <div className="joined-equbs h-auto bg-white grid grid-cols-2 gap-10 rounded-xl">
             <div className="relative">
-              <div
+              {/* <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat filter brightness-95"
                 style={{ backgroundImage: `url(${equb})` }}
-              ></div>
+              ></div> */}
             </div>
             <div className="flex flex-col">
               <JoinedEqubs

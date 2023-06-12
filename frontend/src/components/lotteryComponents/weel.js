@@ -176,27 +176,31 @@ const WheelComponent = ({
     const ctx = canvasContext;
     ctx.lineWidth = 1;
     ctx.strokeStyle = contrastColor || "white";
-    ctx.fileStyle = contrastColor || "white";
+    ctx.fillStyle = contrastColor || "white";
     ctx.beginPath();
     ctx.moveTo(centerX + 20, centerY - 50);
     ctx.lineTo(centerX - 20, centerY - 50);
     ctx.lineTo(centerX, centerY - 70);
     ctx.closePath();
     ctx.fill();
+  
     const change = angleCurrent + Math.PI / 2;
     let i =
       segments.length -
       Math.floor((change / (Math.PI * 2)) * segments.length) -
       1;
     if (i < 0) i = i + segments.length;
+  
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = primaryColor || "black";
     ctx.font = "bold 2.5em proxima-nova";
-    currentSegment = segments[i];
-    isFinished &&
+  
+    if (isFinished) {
       ctx.fillText(currentSegment, centerX + 10, centerY + size + 50);
+    }
   };
+  
   const clear = () => {
     const ctx = canvasContext;
     ctx.clearRect(0, 0, 1000, 500);

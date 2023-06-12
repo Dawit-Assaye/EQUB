@@ -3,10 +3,11 @@ import { useAuthContext } from "../hooks/useAuthContext.js";
 import EqubCreationRequests from "../components/EqubCreationsRequests.jsx"
 import EqubJoinRequests from "../components/EqubJoinRequests.jsx"
 import PayWinner from "../components/PayWinner.jsx"
+import Allequbs from "../components/Allequbs.jsx"
 
 
 //images
-import dy from "../photo/dy.jpg";
+import profile from "../photo/profile.png";
 // import equb from "../photo/equb.png";
 
 function AdminHome() {
@@ -21,13 +22,13 @@ function AdminHome() {
   };
 
   return (
-    <div className="main grid grid-cols-[250px_950px]">
+    <div className="main flex flex-row">
       
-      <div className="admin-left content-center justify-center max-h-full  bg-gray-800 pt-20">
+      <div className="admin-left content-center justify-center max-h-full  bg-gray-800 pt-20 w-[250px]">
         <div className="user-profile flex flex-col">
           <div className="flex justify-center">
             <img
-              src={dy}
+              src={profile}
               alt="User profile"
               className="h-[150px] w-[150px] rounded-full shadow-md shadow-black justify-self-center "
             />
@@ -44,22 +45,23 @@ function AdminHome() {
           <button  onClick={() => handleButtonClick('creation')}  className={`bg-${activeButton === 'creation' ? 'white':'gray-800'}  text-${activeButton === 'creation' ? 'black':'white'} p-2 w-full border-t-[1px] border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>Equb creation requests</button>
           <button  onClick={() => handleButtonClick('joining')}  className={`bg-${activeButton === 'joining' ? 'white':'gray-800'}  text-${activeButton === 'joining' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>Equb joinig requests</button>
           <button  onClick={() => handleButtonClick('payWinner')}  className={`bg-${activeButton === 'payWinner' ? 'white':'gray-800'}  text-${activeButton === 'payWinner' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>Winner payment requests</button>
-          <button  onClick={() => handleButtonClick('equbers')}  className={`bg-${activeButton === 'equbers' ? 'white':'gray-800'}  text-${activeButton === 'equbers' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>All Equbs</button>
-          <button  onClick={() => handleButtonClick('equbs')}  className={`bg-${activeButton === 'equbs' ? 'white':'gray-800'}  text-${activeButton === 'equbs' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>All Equbers</button>
+          <button  onClick={() => handleButtonClick('equbs')}  className={`bg-${activeButton === 'equbers' ? 'white':'gray-800'}  text-${activeButton === 'equbers' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>All Equbs</button>
+          <button  onClick={() => handleButtonClick('equbers')}  className={`bg-${activeButton === 'equbs' ? 'white':'gray-800'}  text-${activeButton === 'equbs' ? 'black':'white'} p-2 w-full border-b-[1px] border-b-gray-400 text-xl font-semibold transition duration-300   hover:bg-gray-900`}>All Equbers</button>
       </div>
       </div>
       
-      <div className="admin-right pt-16 pl-6">
-        <div className="admin-bottom pl-20 pt-4">
+      
+        <div className="admin-bottom pl-6 pt-16 w-[1150px]">
         {activeButton === 'creation' && <EqubCreationRequests/>}
-        {activeButton === 'joining' && <EqubJoinRequests />}
-        {activeButton === 'payWinner' && <PayWinner />}
-          
+        {activeButton === 'joining' && <EqubJoinRequests/>}
+        {activeButton === 'payWinner' && <PayWinner/>}
+        {activeButton === 'equbs' && <Allequbs/>}
+
         {/*{activeButton === 'equbs' && <Equbs />}
         {activeButton === 'equbers' && <Eqbers />} */}
 
       </div>
-      </div>
+      
     </div>
     
 

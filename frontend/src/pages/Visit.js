@@ -31,10 +31,9 @@ function Visit() {
         </h1>
         <button onClick={redirectToSignup} className="visit-button bg-fuchsia-800 hover:bg-fuchsia-950">Get Started</button>
         <div className="additional-heading-info">
-          <p className="additional-heading-description">
+          <p className="additional-heading-description font-semibold text-lg">
             Welcome to EQUB, the platform that revolutionizes your savings and helps you achieve your financial goals.
           </p>
-          <img className="additional-heading-image" src={equb4} alt="Savings" />
         </div>
       </div>
       <div className="card-container">

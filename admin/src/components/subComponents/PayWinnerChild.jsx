@@ -148,21 +148,14 @@ console.log("PAY WINNER HERE")
   return (
     // equb_id as a key for each equbs
     <tr className="border-2">
-      <td className="px-8 py-4 whitespace-nowrap">{equb.equb_name}</td>
-      <td className="px-8 py-4 whitespace-nowrap">
+      <td className="px-12 py-4 whitespace-nowrap">{equb.equb_name}</td>
+      <td className="px-24 py-4 whitespace-nowrap ">
         {equber.first_name} {equber.last_name}
       </td>
-      <td className="px-8 py-4 whitespace-nowrap">{amountOfMoney}</td>
-      <td className="px-8 py-4 whitespace-nowrap">{currentRound}</td>
-      {/* <td className="px-8 py-4 whitespace-nowrap">{status}</td> 
-     <td className="px-8 py-4 whitespace-nowrap">
-      <div onClick={toggleSenderDetails} className="cursor-pointer hover:text-purple-800 hover:text-lg">
-        {sender ? `From ${sender.first_name} ${sender.last_name}` : 'Loading...'}
-        {showSenderDetails && <SenderDetails senderId={sender_id} />}
-      </div>
-    </td> */}
+      <td className="px-9 py-4 whitespace-nowrap">{amountOfMoney}</td>
+      <td className="px-24 py-4 whitespace-nowrap">{currentRound}</td>
       <td
-        className={`px-6 py-4 whitespace-nowrap font-semibold ${
+        className={`pl-24 py-4 whitespace-nowrap font-semibold ${
           (approvalStatus === "Approved" && "text-green-500") ||
           (approvalStatus === "Declined" && "text-red-500")
         }`}
@@ -171,7 +164,7 @@ console.log("PAY WINNER HERE")
         {approvalStatus === "Declined" && "Declined ✖"}
         {approvalStatus === "Pending" && "Pending ⌛"}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap">
+      <td className="px-1 py-4 whitespace-nowrap">
         {approvalStatus !== "Approved" && approvalStatus !== "Declined" && (
           <div className="buttons flex justify-between items-center w-full px-10">
             <button

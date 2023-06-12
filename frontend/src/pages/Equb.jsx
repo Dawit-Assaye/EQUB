@@ -88,8 +88,8 @@ function Equb() {
   const lotteryDate = DateTime.fromISO(equb.lottery_date);
   
   // Format distance to now
-  const paymentReadableDate = paymentDate.toLocaleString(DateTime.DATE_FULL);
-  const lotteryReadableDate = lotteryDate.toLocaleString(DateTime.DATE_FULL);
+  const paymentReadableDate = paymentDate.toLocaleString(DateTime.DATE_FULL, { zone: 'UTC' });
+  const lotteryReadableDate = lotteryDate.toLocaleString(DateTime.DATE_FULL, { zone: 'UTC' });
   
   
   return (
@@ -139,10 +139,10 @@ function Equb() {
           <FontAwesomeIcon icon={faDice} size="6x" className="hover:text-fuchsia-600" />
 
           <h3 className="text-xl font-semibold text-gray-800 mt-4">
-            LOTTERY
+            Equb Wheel
           </h3>
           <p className="text-gray-600 mt-2">
-           Attend lottery for this round
+           Attend equb drawing for this round
           </p>
         </div>
 

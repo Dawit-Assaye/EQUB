@@ -17,13 +17,21 @@ export class LotteryWheel extends Component {
     };
   }
 
+  onFinished = (winner) => {
+    const { candidates, winner: winnerName } = this.props;
+    const winningSegmentIndex = candidates.indexOf(String(winnerName));
+    const show = candidates[winningSegmentIndex];
+    this.setState({ show });
+  };
+  
+
   render() {
     const user = this.props.user;
     const candidates = this.props.candidates;
     const winnerName = this.props.winner;
     // Find the index of the winnerName in the candidates array
     const winningSegmentIndex = candidates.indexOf(String(winnerName));
-
+   
     console.log("Lottery Wheel", this.props.candidates);
     console.log("Wheel user", this.props.user);
     console.log("Wheel winner", candidates[winningSegmentIndex]);
@@ -58,10 +66,11 @@ export class LotteryWheel extends Component {
     //     return segments[Math.floor(Math.random() * segments.length)];
     //   }, 5000);
     // };
-    const onFinished = () => {
-      const winner = candidates[winningSegmentIndex]; // Predefined winner
-      this.setState({ portal: false, show: winner });
-    };
+
+    // const onFinished = () => {
+    //   const winner = candidates[winningSegmentIndex]; // Predefined winner
+    //   this.setState({ portal: false, show: winner });
+    // };
     return (
       <div
         // id="pankaj"
@@ -72,21 +81,21 @@ export class LotteryWheel extends Component {
           paddingBottom: "5px",
           //   background: `url(${IMAGES.background})`
         }}
-      >
+        >
         {this.state.show &&
           user.firstname === candidates[winningSegmentIndex] && (
             <Confetti
-              width={1600}
-              height={1019}
-              initialVelocityY={Number | { min: 1, max: 10 }}
+            width={1600}
+            height={1019}
+            initialVelocityY={Number | { min: 1, max: 10 }}
             />
-          )}
+            )}
 
         <WheelComponent
           segments={candidates}
           segColors={segColors}
           winningSegment={candidates[winningSegmentIndex]}
-          onFinished={(winner) => onFinished(winner)}
+          onFinished={this.onFinished}
           primaryColor="black"
           contrastColor="white"
           buttonText="Draw Equb"

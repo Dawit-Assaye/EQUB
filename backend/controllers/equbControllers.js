@@ -489,7 +489,7 @@ const equbWinnerPayment = async (req, res) => {
       round: currentRound,
       amount: amountOfMoney,
       payee_id: equber._id,
-      payee_name: equber.first_name
+      payee_name:`${equber.first_name} ${equber.last_name}`
     });
 
 

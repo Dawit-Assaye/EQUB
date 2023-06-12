@@ -13,7 +13,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Lottery from "./pages/Lottery";
-// import Footer from "./components/Footer";
+import Footer from "./components/Footer";
 import Equb from "./pages/Equb";
 
 
@@ -66,7 +66,7 @@ function App() {
       
         </Routes>
       </div>
-      {/* <Footer/> */}
+      <Footer/>
     </BrowserRouter>
   );
 }

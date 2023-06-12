@@ -43,8 +43,8 @@ function PayWinner() {
             <th className=" pl-4">Equber Name</th>
             <th className=" pl-4">Amount of Money</th>
             <th className=" pl-4">Current Round</th>
-            <th className=" pl-40">Approval Status</th>
-            <th className=" pl-44">Actions</th>
+            <th className=" pl-16">Approval Status</th>
+            <th className=" pl-24">Actions</th>
           </tr>
         </thead>
         <tbody>

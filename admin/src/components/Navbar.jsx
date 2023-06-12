@@ -23,7 +23,7 @@ const Navbar = () => {
             <div className="loggedin flex items-center justify-between">
               <div className="greet flex items-center justify-between text-white">
                 welcome back{" "}
-                <h3 className="ml-2 text-2xl font-semibold text-purple-800">
+                <h3 className="ml-2 text-2xl font-semibold text-purple-500">
                   {user.firstname}
                 </h3>
               </div>
@@ -39,7 +39,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-2 mr-10 ">
               <Link
                 to="/"
-                className="hover:text-purple-700 hover:animate-[bounce_2s_ease-in-out_infinite] text-xl"
+                className="text-purple-500 hover:animate-[bounce_2s_ease-in-out_infinite] text-xl"
               >
                 Login
               </Link>

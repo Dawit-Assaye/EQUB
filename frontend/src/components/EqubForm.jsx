@@ -39,7 +39,7 @@ function EqubForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-y-1 items-center justify-center">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-y-1 items-center justify-center gap-x-4">
       <h3 className="text-xl text-fuchsia-700">Equb Informations</h3>
       <div className="flex flex-wrap gap-x-6 items-center justify-center">
       <div>
@@ -62,7 +62,7 @@ function EqubForm() {
             setFormData({ ...formData, equb_type: e.target.value });
           }}
         >
-          <option value="weekly">Weekly</option>
+          <option value="weekly" className="mt-2">Weekly</option>
           <option value="monthly" >Monthly</option>
           </select>
           
@@ -92,7 +92,7 @@ function EqubForm() {
         }}
       />
 
-      <label htmlFor="starting">Starts at</label>
+      <label htmlFor="starting">Pay Before</label>
       <input
             type="date"
             placeholder="Starting date of this equb..."

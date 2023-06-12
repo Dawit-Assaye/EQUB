@@ -18,7 +18,7 @@ async function performEqubTasks() {
     for (const equb of equbs) {
       const today = new Date();
 
-      console.log("LAST A", equb.last_payment_date);
+      console.log("Equb Name", equb.equb_name);
 
       // Handler for all equbs
       // Check if the equb has already been processed for the current day's payment
@@ -30,7 +30,7 @@ async function performEqubTasks() {
         continue; // Skip processing for this equb
       }
 
-      console.log("LAST 0", equb.last_payment_date);
+      console.log("Payment processed for today ");
       // Check if the equb has already been processed for the current day's lottery
       if (
         equb.last_lottery_date &&
@@ -40,7 +40,7 @@ async function performEqubTasks() {
         continue; // Skip processing for this equb
       }
 
-      console.log("LAST 1", equb.last_payment_date);
+      console.log("Lottey processed for today ");
 
       //Handler for round one exceptionally
       if (
@@ -72,7 +72,7 @@ async function performEqubTasks() {
         console.log("TODAY", today.toDateString());
 
         if (paymentDateobj.toDateString() === today.toDateString()) {
-          console.log("LAST 3", equb.last_payment_date);
+          console.log("Payment filtering");
 
           // Updating the members by including only the contributed equbers for the first round
           if (equb.current_round === 1) {
@@ -248,7 +248,7 @@ async function performEqubTasks() {
   }
 }
 // Schedule the equb tasks to run daily at a specific time
-cron.schedule("1 * * * *", performEqubTasks);
+cron.schedule("* * * * *", performEqubTasks);
 
 // Export the function
 module.exports = performEqubTasks;

@@ -145,9 +145,9 @@ console.log("WHATTTTT",equb_starting_date)
     // equb_id as a key for each equbs
     <tr className="border-2">
     <td className="px-8 py-4 whitespace-nowrap">{equb_name}</td>
-    <td className="px-8 py-4 whitespace-nowrap">{equb_type}</td>
+    <td className="px-20 py-4 whitespace-nowrap">{equb_type}</td>
     <td className="px-8 py-4 whitespace-nowrap">{equb_amount}</td>
-    <td className="px-8 py-4 whitespace-nowrap">{equb_round}</td>
+    <td className="px-16 py-4 whitespace-nowrap">{equb_round}</td>
     <td className="px-8 py-4 whitespace-nowrap">{startReadableDate}</td>
     <td className="px-8 py-4 whitespace-nowrap">
       <div onClick={toggleSenderDetails} className="cursor-pointer hover:text-purple-800 hover:text-lg">

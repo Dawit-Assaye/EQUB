@@ -40,8 +40,8 @@ function EqubCreationsRequests() {
           <th className=" pl-0">Equb Round</th>
           <th className=" pl-0">Equb Starting Date</th>
           <th className=" pl-10">Sender</th>
-          <th className=" pl-40">Approval Status</th>
-          <th className=" pl-44">Actions</th>
+          <th className=" pl-28">Approval Status</th>
+          <th className=" pl-28">Actions</th>
         </tr>
       </thead>
       <tbody>
