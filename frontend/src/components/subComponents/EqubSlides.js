@@ -58,6 +58,7 @@ function EqubSlides(props) {
         <p className="equb-amount m-0">ETB {props.amount} per person</p>
         <p className="equb-round m-0">max {props.max_round} round</p>
         <p className="equb-strting-date m-0">starts at {formattedStartingDate}</p>
+        {isMember && <p className="m-0 text-fuchsia-700">You are a member</p>}
         
         {isStartingDatePassed ? (
           <p className="m-0 text-fuchsia-700">Started</p>
@@ -71,7 +72,6 @@ function EqubSlides(props) {
                 Join
               </button>
             )}
-            {isMember && <p className="m-0 text-fuchsia-700">You are a member</p>}
             {joinRequestSent && <p className="m-0 text-lime-500">Join request sent</p>}
           </>
         )}

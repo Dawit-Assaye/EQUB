@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import { useNavigate } from "react-router-dom";
 import { DateTime } from 'luxon';
+import { Link } from 'react-router-dom';
 // import { useFetchEqub } from "../hooks/useFetchEqub.js";
 
 import Logo from "../photo/new.jpeg";
@@ -147,12 +148,12 @@ function Equb() {
         </div>
 
         {/* Equb Members Card */}
-        <div className="flex flex-col items-center justify-center bg-white shadow-lg rounded-lg p-6 cursor-pointer transition-colors delay-50 ">
-        <FontAwesomeIcon icon={faPeopleRoof} size="6x" className="hover:text-teal-500" />
-          <h3 className="text-xl font-semibold text-gray-800 mt-2">Equb Members</h3>
-          <p className="text-gray-600 mt-2">
-            Discover peers
-          </p>
+      <div className="flex flex-col items-center justify-center bg-white shadow-lg rounded-lg p-6 cursor-pointer transition-colors delay-50 ">
+      <Link to={`/equb/${equbId}/members`} className="hover:text-teal-500">
+  <FontAwesomeIcon icon={faPeopleRoof} size="6x" className="hover:text-teal-500" />
+  <h3 className="text-xl font-semibold text-gray-800 mt-2">Equb Members</h3>
+  <p className="text-gray-600 mt-2">Discover peers</p>
+</Link>
         </div>
       </div>
 

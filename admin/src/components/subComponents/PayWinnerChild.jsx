@@ -164,7 +164,7 @@ console.log("PAY WINNER HERE")
         {approvalStatus === "Declined" && "Declined ✖"}
         {approvalStatus === "Pending" && "Pending ⌛"}
       </td>
-      <td className="px-1 py-4 whitespace-nowrap">
+      <td className="pl-12 py-4 whitespace-nowrap">
         {approvalStatus !== "Approved" && approvalStatus !== "Declined" && (
           <div className="buttons flex justify-between items-center w-full px-10">
             <button

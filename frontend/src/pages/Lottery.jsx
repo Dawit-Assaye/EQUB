@@ -76,7 +76,7 @@ function Lottery() {
   const handleCelebration = () => {
     return (
       <div className="text-white">
-        <p>The last lottery winner was {winner.first_name}.</p>
+        <div className="flex flex-row gap-2"><p>The last lottery winner was</p> <div className="font-bold text-xl">{winner.first_name}.</div></div>
         <p>Stay tuned for the next lottery announcement.</p>
       </div>
     );
@@ -109,7 +109,7 @@ function Lottery() {
       }
     } else if (equb.current_round === 1) {
       return <p className="text-white">This equb has not yet started.</p>;
-    } else if (today - lastLotteryDateObj >= 3) {
+    } else if (today - lastLotteryDateObj <= 3) {
       const lotteryDistance = lotteryDateTime.toRelative({ style: "long" });
 
       return (

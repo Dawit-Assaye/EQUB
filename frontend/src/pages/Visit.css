@@ -306,7 +306,9 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #4285f4;
+    background-color: #34f270;
+
+   
   }
   
   .step-description li::after {

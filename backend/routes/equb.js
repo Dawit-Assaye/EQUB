@@ -1,6 +1,6 @@
 const express=require('express')
 //controller functions
-const {equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,getEqubWinnerPaymentRequests,deleteEqubWinnerPaymentRequests,updateEqubWinnerPaymentRequestsStatus,equbWinnerPayment,createEqub,getEqubs,getEqub,getJoinedEqubs,addSenderToMember, updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,payForEqub,getWinner,getCandidates}=require('../controllers/equbControllers')
+const {equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,getEqubWinnerPaymentRequests,deleteEqubWinnerPaymentRequests,updateEqubWinnerPaymentRequestsStatus,equbWinnerPayment,createEqub,deleteEqub,getEqubs,getEqub,getJoinedEqubs,addSenderToMember, updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,payForEqub,getWinner,getCandidates}=require('../controllers/equbControllers')
 const requireAuth=require('../middlewares/requireAuth');
 
 
@@ -38,6 +38,9 @@ router.get('/all', getEqubs)
 
 //Get specific equb
 router.get('/:id',getEqub)
+
+//Delete specific equb
+router.delete('/:id',deleteEqub)
 
 //Get joined equbs
 router.get('/joined/:id',getJoinedEqubs)

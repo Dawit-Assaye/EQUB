@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-import EqubRequests from "./subComponents/EqubRequests";
+import EqubsSingle from "./subComponents/EqubsSingle.jsx";
 
-function EqubCreationsRequests() {
+function Equbs() {
   const { user } = useAuthContext();
-  const [requests, setRequests] = useState([]);
+  const [equbs, setEqubs] = useState([]);
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -13,7 +13,7 @@ function EqubCreationsRequests() {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         const json = await response.json();
-        setRequests(json);
+        setEqubs(json);
       } catch (err) {
         console.error(err);
       }
@@ -22,10 +22,11 @@ function EqubCreationsRequests() {
       fetchRequests();
     }
   }, [user]);
+  
 
-  const handleDeleteRequest = (requestId) => {
-    setRequests((prevRequests) =>
-      prevRequests.filter((request) => request._id !== requestId)
+  const handleDeleteEqub = (equbId) => {
+    setEqubs((prevEqubs) =>
+    prevEqubs.filter((equb) => equb._id !== equbId)
     );
   };
 
@@ -45,9 +46,9 @@ function EqubCreationsRequests() {
         </tr>
       </thead>
       <tbody>
-        {requests.map((request) => (
-          <tr key={request._id} className="border-2">
-            <EqubRequests {...request} onDelete={handleDeleteRequest} />
+        {equbs.map((equb) => (
+          <tr key={equb._id} className="border-2">
+            <EqubsSingle {...equb} onDelete={handleDeleteEqub} />
           </tr>
         ))}
       </tbody>
@@ -57,4 +58,4 @@ function EqubCreationsRequests() {
   );
 }
 
-export default EqubCreationsRequests;
+export default Equbs;

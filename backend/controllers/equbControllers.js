@@ -232,6 +232,29 @@ const getEqub = async (req, res) => {
 };
 
 
+
+// Delete specific equb
+const deleteEqub = async (req, res) => {
+  
+  try {
+    // Find the request by ID and delete
+    const request = await Equb.findByIdAndDelete(req.params.id);
+
+    // If the request is not found, return an error response
+    if (!request) {
+      return res.status(404).json({ error: 'Equb not found' });
+    }
+
+    // Return a success response
+    res.json({ message: 'Equb deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while deleting the Equb' });
+  }
+};
+
+
+
 //Get joined equbs
 const getJoinedEqubs = async (req, res) => {
   const member_id = req.params.id;
@@ -504,4 +527,4 @@ const equbWinnerPayment = async (req, res) => {
 };
 
 
-module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,getEqubWinnerPaymentRequests,deleteEqubWinnerPaymentRequests,updateEqubWinnerPaymentRequestsStatus,equbWinnerPayment,createEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember,payForEqub,getWinner,getCandidates};
+module.exports = { equbCreationRequest,equbJoinRequest,getEqubCreationRequests,getEqubJoinRequests,getEqubWinnerPaymentRequests,deleteEqubWinnerPaymentRequests,updateEqubWinnerPaymentRequestsStatus,equbWinnerPayment,createEqub,deleteEqub,updateJoinRequestStatus,updateCreationRequestStatus,deleteEqubCreationRequests,getEqubs,getEqub,getJoinedEqubs,addSenderToMember,payForEqub,getWinner,getCandidates};

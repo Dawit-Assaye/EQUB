@@ -15,6 +15,7 @@ import Navbar from "./components/Navbar";
 import Lottery from "./pages/Lottery";
 import Footer from "./components/Footer";
 import Equb from "./pages/Equb";
+import EqubMembers from "./components/EqubMembers"
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
           />
           <Route path="/equb/:equbId" element={user? <Equb />: <Navigate to="/login"/>} />
           <Route path="/equb/:equbId/lottery" element={user ? <Lottery /> : <Navigate to="/login"/>} />
+          <Route path="/equb/:equbId/members" element={user ? <EqubMembers /> : <Navigate to="/login"/>} />
       
         </Routes>
       </div>
