@@ -6,7 +6,7 @@ const Wallet = require("../models/walletModel");
 const jwt = require("jsonwebtoken");
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
+  return jwt.sign({ _id }, process.env.SECRET, ); //{ expiresIn: "3d" }
 };
 //login equber
 const loginEquber = async (req, res) => {
@@ -223,6 +223,7 @@ console.log('back recieved',amount, accountNumber, walletObjectId);
     await bankAccount.save();
     
     wallet.balance = Number(wallet.balance) + Number(amount);
+    wallet.totalRotated = Number(wallet.totalRotated) + Number(amount); // Increment the totalRotated amount
     await wallet.save();
 
     // Return success response

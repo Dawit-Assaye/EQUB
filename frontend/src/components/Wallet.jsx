@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useDeposit } from "../hooks/useDeposit";
 import { useWithdraw } from "../hooks/useWithdraw";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuildingColumns,faMoneyBillTransfer,faSackDollar, faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons';
+
 function Wallet(props) {
   const { wallet } = props;
   const { deposit } = useDeposit();
@@ -53,24 +56,36 @@ function Wallet(props) {
 
   return (
     <div className="my-wallet shadow-2xl rounded-lg p-4 h-40">
-    <h2 className="text-fuchsia-800 font-semibold">My Wallet</h2>
-    <p className="wallet-balance">Current balance {wallet.balance} ETB</p>
-    <p className="text-gray-600">Total Rotated {wallet.totalRotated} ETB</p>
-    <p className="text-gray-600">Bank account {wallet.accountNumber}</p>
-    <div className="flex justify-between mt-4">
-      <button
-        className="bg-lime-500 text-white rounded-lg shadow-md p-2 hover:bg-lime-700 w-24"
-        onClick={handleOpenDepositModal}
-      >
-        Deposit
-      </button>
-      <button
-        className="bg-fuchsia-800 text-white rounded-lg shadow-md p-2 hover:bg-fuchsia-950 w-24"
-        onClick={handleOpenWithdrawModal}
-      >
-        Withdraw
-      </button>
-    </div>
+  <h2 className="text-fuchsia-800 font-semibold">My Wallet</h2>
+  <p className="wallet-balance">
+  <FontAwesomeIcon icon={faSackDollar} className="mr-2 text-fuchsia-700" />
+    Current balance: {wallet.balance} ETB
+  </p>
+  <p className="text-gray-600">
+  <FontAwesomeIcon icon={faMoneyBillTransfer} className="mr-2 text-fuchsia-700" />
+    Total Rotated: {wallet.totalRotated} ETB
+  </p>
+  <p className="text-gray-600">
+  <FontAwesomeIcon icon={faBuildingColumns} className="mr-2 text-fuchsia-700" />
+    Bank account: {wallet.accountNumber}
+  </p>
+  <div className="flex justify-between mt-4">
+    <button
+      className="bg-lime-500 text-white text-sm p-2 rounded-lg shadow-md hover:bg-lime-700 w-24"
+      onClick={handleOpenDepositModal}
+    >
+      <FontAwesomeIcon icon={faArrowAltCircleUp} className="mr-2" />
+      Deposit
+    </button>
+    <button
+      className="bg-fuchsia-800 text-white rounded-lg shadow-md text-sm hover:bg-fuchsia-950 w-24"
+      onClick={handleOpenWithdrawModal}
+    >
+      <FontAwesomeIcon icon={faArrowAltCircleDown} className="mr-2" />
+      Withdraw
+    </button>
+  </div>
+
     {showDepositModal && (
         <div className="inset-0 flex items-center justify-center fixed z-10">
           <div className="fixed inset-0 bg-black opacity-25"></div>

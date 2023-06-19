@@ -1,7 +1,7 @@
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { formatDistanceToNow } from 'date-fns';
+import { DateTime } from 'luxon';
 // import WheelComponent from 'react-wheel-of-prizes';
 import LotteryWheel from './LotteryWheel.js'
 
@@ -10,7 +10,10 @@ function Lottery() {
   const { equbId } = useParams();
   const [winner, setWinner] = useState('');
   const [candidates, setCandidates] = useState([]);
-  const [lotteryDate, setLotteryDate] = useState('');
+  const [lotteryDate, setLotteryDate] = useState(''); 
+  const [lastLotteryDate, setLastLotteryDate] = useState('');
+  const[equb,setEqub]=useState('')
+
 
   useEffect(() => {
     const fetchEqubData = async (equbId) => {
@@ -20,6 +23,8 @@ function Lottery() {
         });
         const equbData = await response.json();
         setLotteryDate(equbData.lottery_date);
+        setLastLotteryDate(equbData.last_lottery_date)
+        setEqub(equbData)
       } catch (error) {
         console.error(error);
       }
@@ -65,40 +70,27 @@ function Lottery() {
   //   return color;
   // };
 
+  console.log("LOTTERY NOW", lotteryDate)
+
   const handleCelebration = () => {
-    if (user.user_id === winner._id) {
-      return (
-        <div className="text-white">
-          <p>Congratulations, {winner.first_name}!</p>
-          <p>You are the winner of the last lottery.</p>
-          <p>Please visit the admin's office to fulfill some legality issues.</p>
-        </div>
-      );
-    } else {
+  
       return (
         <div className="text-white">
           <p>The last lottery winner was {winner.first_name}.</p>
           <p>Stay tuned for the next lottery announcement.</p>
         </div>
       );
-    }
+    
   };
-
-  // const handlePrizeWheelFinished = () => {
-  //   console.log("PRRRRiiiizeee")
-  //   return (
-  //     <div>
-  //       <p className="text-red-600 text-xl font-bold">This round winner is {winner.first_name}.</p>
-  //     </div>
-  //   )
-  // };
 
   const renderAnnouncement = () => {
     const today = new Date();
-    const lotteryDateObj = new Date(lotteryDate);
+    // const lotteryDateObj = new Date(lotteryDate);
+    const lastLotteryDateObj=new Date(lastLotteryDate)
+    const lotteryDateTime = DateTime.fromISO(lotteryDate);
 
 
-    if (today.toDateString() === lotteryDateObj.toDateString()) {
+    if (today.toDateString() === lastLotteryDateObj.toDateString()) {
       if (candidates.length !== 0) {
       const candidatesArray=candidates.map(candidate => candidate.first_name)
       console.log(candidatesArray)
@@ -106,32 +98,20 @@ function Lottery() {
           <div className="flex flex-col items-center justify-content-center p-0 m-6">
             <p>Day To Know The Lucky One</p>
             <LotteryWheel candidates={candidatesArray} user={user} winner={winner} />
-            {/* <WheelComponent
-              segments={candidatesArray}
-              segColors={candidates.map(() => getRandomColor())}
-              winningSegment={user.first_name} // Adjust this based on your winner data
-              onFinished={handlePrizeWheelFinished()}
-              primaryColor='black'
-              contrastColor='white'
-              buttonText='Draw Equb'
-              isOnlyOnce={false}
-              size={200}
-              upDuration={1000}
-              downDuration={1000}
-              fontFamily='Arial'
-              mustStartSpinning={false} // Start spinning automatically
-              prizeNumber={0} // Index of the desired partition (0-based index)
-            /> */}
           </div>
         );
       }
-    } else if (today < lotteryDateObj) {
-      const distanceToLottery = formatDistanceToNow(lotteryDateObj, { addSuffix: true });
+    }else if ( equb.current_round === 1) {
+      return (
+        <p className="text-white">This equb has not yet started.</p>
+      );
+    } else if ((today-lastLotteryDateObj)>=3) {
+      const lotteryDistance = lotteryDateTime.toRelative({ style: 'long' });
 
       return (
-        <p className="text-white">The next lottery will be held {distanceToLottery}.</p>
+        <p className="text-white">The next lottery will be held {lotteryDistance}.</p>
       );
-    } else {
+    }else {
       return handleCelebration();
     }
   };

@@ -100,8 +100,16 @@ const equbSchema = new Schema({
     type: Date,
     required: true,
     default: function () {
-      const lastLotteryDate = new Date(this.lottery_date.getTime() - 3 * 24 * 60 * 60 * 1000);//minus 3 days from the current lottery date
+      const lastLotteryDate = new Date(this.lottery_date.getTime() - 24 * 60 * 60 * 1000); // Subtract 1 day in milliseconds
       return lastLotteryDate;
+    }
+  },
+  last_payment_date: {
+    type: Date,
+    required: true,
+    default:function () {
+      const lastPaymentDate = new Date(this.payment_date.getTime() - 24 * 60 * 60 * 1000); // Subtract 1 day in milliseconds
+      return lastPaymentDate;
     }
   }
   

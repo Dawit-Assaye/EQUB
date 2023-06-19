@@ -249,26 +249,25 @@ const getJoinedEqubs = async (req, res) => {
 
 //add sender to a member of the equb
 
-const addSenderToMember=async (req, res) => {
+const addSenderToMember = async (req, res) => {
   try {
-    // const { equbId } = req.params;
-    const { member_id,equb_id } = req.body;
+    const { member_id, equb_id } = req.body;
 
-    //find and update the field by using mongoose
-    await Equb.updateOne({ _id: equb_id }, { $push: { members: new ObjectId(member_id) } });
+    // Find the equb by its ID
+    const equb = await Equb.findById(equb_id);
 
+    if (!equb) {
+      return res.status(404).json({ error: 'Equb not found' });
+    }
 
-    // // Find the equb by its ID
-    // const equb = await Equb.findById(equb_id);
+    // Check if the member is already a part of the equb
+    if (equb.members.includes(member_id)) {
+      return res.status(400).json({ error: 'Member is already part of the equb' });
+    }
 
-    // console.log('The founded equb',equb);
-    // if (!equb) {
-    //   return res.status(404).json({ error: 'Equb not found' });
-    // }
-
-    // // Add the user as a member to the equb
-    // equb.members.push(new ObjectId(member_id));
-    // await equb.save();
+    // Add the member to the equb
+    equb.members.push(member_id);
+    await equb.save();
 
     res.status(200).json({ message: 'Member added successfully' });
   } catch (error) {

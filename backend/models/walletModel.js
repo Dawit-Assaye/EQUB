@@ -7,7 +7,8 @@ const walletSchema = new mongoose.Schema({
   },
   accountNumber: {
     type: String,
-    required: true
+    required: true,
+    unique:true
   },
   pinNumber: {
     type: String,

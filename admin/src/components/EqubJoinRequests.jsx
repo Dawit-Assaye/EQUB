@@ -31,11 +31,30 @@ function EqubJoinRequests() {
 
 
   return (
-    <div className="requests grid grid-cols-2 gap-3 justify-center">
+    <div className="overflow">
+    <table className="requests w-full table-fixed">
+      <thead className="w-full">
+        <tr>
+          <th className=" px-2">Equb Name</th>
+          <th className=" pl-4 ">Equb Type</th>
+          <th className=" pl-4">Equb Amount</th>
+          <th className=" pl-0">Equb Round</th>
+          <th className=" pl-0">Equb Starting Date</th>
+          <th className=" pl-10">Sender</th>
+          <th className=" pl-40">Approval Status</th>
+          <th className=" pl-44">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
       {requests.map((request) => (
-        <EqubJoinRequest key={request._id} {...request}   onDelete={handleDeleteRequest}/>
+        <tr key={request._id}>
+          <EqubJoinRequest {...request} onDelete={handleDeleteRequest} />
+        </tr>
       ))}
-    </div>
+   </tbody>
+    </table>
+  </div>
+  
   );
 }
 

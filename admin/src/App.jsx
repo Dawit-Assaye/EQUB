@@ -44,7 +44,7 @@ function App() {
       <div  style={{ position: navbarPosition, top: 0, width: "100%",zIndex: 100 }}>
       <Navbar/>
       </div>
-      <div className="container w-full ">
+      <div className="container w-full pr-0 mr-0">
         <Routes>
           <Route path="/" element={!user ? <AdminLogin/> : <Navigate to="/admin-home"/>}
           />

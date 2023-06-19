@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import { Link } from 'react-router-dom';
 import "./Login.css"
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
 
   return (
     <form className="login" onSubmit={handleSubmit}>
-      <h3>Login</h3>
+      <h3 className="text-lg font-semibold">Login</h3>
       <label htmlFor="email">Email:</label>
       <input
         type="email"
@@ -30,8 +31,12 @@ const Login = () => {
         value={password}
         id="pwd"
       />
-      <button disabled={isLoading}>Login</button>
+      <button disabled={isLoading} className="bg-lime-500">Login</button>
       {error && <div className="error">{error}</div>}
+      <p className="mt-4">
+        New user?{" "}
+        <Link to="/signup" className='text-lg font-semibold text-fuchsia-800'>Signup here</Link>
+      </p>
     </form>
   );
 };

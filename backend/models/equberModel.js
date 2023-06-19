@@ -79,16 +79,16 @@ equberSchema.statics.signup = async function (
   const exists = await this.findOne({ email });
 
   // validation
-  if (!email || !password) {
-    throw Error("All fields must be filled");
-  }
+  // if (!email || !password) {
+  //   throw Error("All fields must be filled");
+  // }
 
-  if (!validator.isEmail(email)) {
-    throw Error("Email is not valid");
-  }
-  if (!validator.isStrongPassword(password)) {
-    throw Error("Password is not enough strong");
-  }
+  // if (!validator.isEmail(email)) {
+  //   throw Error("Email is not valid");
+  // }
+  // if (!validator.isStrongPassword(password)) {
+  //   throw Error("Password is not enough strong");
+  // }
 
   if (exists) {
     throw Error("Email already in use");

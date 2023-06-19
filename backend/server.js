@@ -21,14 +21,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// Call the equb tasks function
-// performEqubTasks();
 
 //routes
 app.use("/api/admin", adminRoutes);
 app.use("/api/equber", equberRoutes);
 app.use("/api/equb", equbRoutes);
 app.use("/api/bankAccount", bankAccountRoutes);
+
+// Call the equb tasks function
+performEqubTasks();
 
 // Connect to EqubDB and listen on port
 const equbDBConnection = mongoose.connect(process.env.MONG_URIEQ, {

@@ -5,7 +5,7 @@ import "./Signup.css"
 import SignupInfo from '../components/subComponents/SignupInfo'
 import PersonalInfo from '../components/subComponents/PersonalInfo'
 import AdditionalInfo from '../components/subComponents/AdditionalInfo'
-
+import { Link } from 'react-router-dom';
 const Signup=()=>{
 // const[email,setEmail]=useState('')
 // const[password,setPassword]=useState('')
@@ -96,7 +96,7 @@ return(
           {error && <div className='error'>{error}</div>} */}
 
 <div className="progressbar ">
-        <div
+        <div className='bg-lime-500'
           style={{ width: page === 0 ? "33.3%" : page === 1 ? "66.6%" : "100%" }}
         ></div>
       </div>
@@ -112,7 +112,7 @@ return(
             onClick={() => {
               setPage((currPage) => currPage - 1);
           }}
-          className='bg-green-500'
+          className='bg-lime-500'
           >
             Prev
           </button>
@@ -129,13 +129,16 @@ return(
                     setPage((currPage) => currPage+1);
                 }
             }}
-        className='bg-green-500'    
+        className='bg-lime-500'    
         >
             {page === FormTitles.length - 1 ? "Submit" : "Next"}
           </button>
         </div>
         {error && <div className='error'>{error}</div>}
-      </div>
+    </div>
+    <p className='mt-4'>
+        Already have an account? <Link to="/login"className='text-lg font-semibold text-fuchsia-800'>Sign in</Link>
+      </p>
     </form>
 )
 

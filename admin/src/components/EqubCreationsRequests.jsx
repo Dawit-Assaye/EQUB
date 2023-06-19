@@ -30,11 +30,30 @@ function EqubCreationsRequests() {
   };
 
   return (
-    <div className="requests grid grid-cols-2 gap-3 justify-center">
-      {requests.map((request) => (
-        <EqubRequests key={request._id} {...request}   onDelete={handleDeleteRequest}/>
-      ))}
-    </div>
+    <div className="overflow">
+    <table className="requests w-full table-fixed">
+      <thead className="w-full">
+        <tr>
+          <th className=" px-2">Equb Name</th>
+          <th className=" pl-4 ">Equb Type</th>
+          <th className=" pl-4">Equb Amount</th>
+          <th className=" pl-0">Equb Round</th>
+          <th className=" pl-0">Equb Starting Date</th>
+          <th className=" pl-10">Sender</th>
+          <th className=" pl-40">Approval Status</th>
+          <th className=" pl-44">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {requests.map((request) => (
+          <tr key={request._id} className="border-2">
+            <EqubRequests {...request} onDelete={handleDeleteRequest} />
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  
   );
 }
 

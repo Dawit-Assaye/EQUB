@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import { useNavigate } from "react-router-dom";
+import { DateTime } from 'luxon';
 // import { useFetchEqub } from "../hooks/useFetchEqub.js";
 
 import Logo from "../photo/new.jpeg";
@@ -83,25 +84,38 @@ function Equb() {
     setShowModal(false);
   };
 
+  const paymentDate = DateTime.fromISO(equb.payment_date);
+  const lotteryDate = DateTime.fromISO(equb.lottery_date);
+  
+  // Format distance to now
+  const paymentReadableDate = paymentDate.toLocaleString(DateTime.DATE_FULL);
+  const lotteryReadableDate = lotteryDate.toLocaleString(DateTime.DATE_FULL);
+  
+  
   return (
-    <div className="container mx-auto pb-20  flex flex-col">
+    <div className="container mx-auto pb-20 flex flex-col">
+    <div className="flex items-center justify-center">
       {/* Logo */}
-      <div className="flex items-center justify-center ">
-        <img
-          src={Logo}
-          alt="User profile "
-          className="h-[150px] w-[150px] rounded-full shadow-lg shadow-black justify-self-center "
-        />
-      </div>
+      <img
+        src={Logo}
+        alt="User profile"
+        className="h-[150px] w-[150px] rounded-full shadow-lg shadow-black justify-self-center"
+      />
 
-      {/* Description */}
-      <p className="text-center text-xl font-semibold text-lime-500 mt-8 ">
-        {equb.equb_name}
-      </p>
-      <p className="font-medium text-lg text-gray-800">
-        This equb had {equb.max_round} maximum round on the first place, and it
-        is {equb.type} Equb.
-      </p>
+      {/* Dynamic Information */}
+      <div className="ml-8">
+        <p className="text-xl font-semibold text-lime-500 mt-2">{equb.equb_name}</p>
+        <ul className="list-item list-inside text-gray-800">
+          <li>Maximum Rounds: {equb.max_round}</li>
+          <li>Type: {equb.type}</li>
+          <li>Current Round: {equb.current_round}</li>
+          <li>Status: {equb.status}</li>
+          <li>Payment Lasting Date: {paymentReadableDate}</li>
+          <li>Lottery Date: {lotteryReadableDate}</li>
+        </ul>
+      </div>
+    </div>
+
 
       {/* Card Section */}
       <div className="flex flex-row gap-12 mt-8 self-center justify-center">

@@ -91,7 +91,7 @@ console.log("here is the sender_id",sender_id,equb_name, equb_type, equb_amount,
 
       // }
 
-      //creating equb
+     if(status==="Approved"){ //creating equb
       const response = await fetch("/api/equb/create", {
         method: "POST",
         headers: {
@@ -107,7 +107,7 @@ console.log("here is the sender_id",sender_id,equb_name, equb_type, equb_amount,
           sender_id,
         }),
       });
-      const json = await response.json();
+      const json = await response.json();}
       
       // if (response.ok) {
       //   setApproved(true);
@@ -121,40 +121,40 @@ console.log("here is the sender_id",sender_id,equb_name, equb_type, equb_amount,
   
   return (
     // equb_id as a key for each equbs
-    <div className={`request shadow-md  shadow-slate-600 w-[370px] rounded-sm flex flex-col p-3 items-start relative ${showSenderDetails ? 'h-auto' : 'h-[230px] overflow-hidden'}`}>
-        <h3 className="title text-purple-700 font-semibold"> Equb Creation Request</h3>
-        <p className="equb-name m-0 ">Name {equb_name}</p>
-      <div className="equb-type m-0 flex gap-1">Type <p className="text-gray-500">{equb_type}</p></div>
-      <p className="equb-amount m-0">Amount {equb_amount}</p>
-      <p className="equb-round m-0">Round {equb_round}</p>
-      <p className="equb-starting-data m-0">Starting date {equb_starting_date}</p>
-      
-      <div onClick={toggleSenderDetails} className="sender-details cursor-pointer hover:text-purple-800 hover:text-lg " >
-      <p className="equb-sender m-0 font-semibold text-purple-900">{sender ? `From ${sender.first_name} ${sender.last_name}` : 'Loading...'}</p>
+    <tr className="border-2">
+    <td className="px-8 py-4 whitespace-nowrap">{equb_name}</td>
+    <td className="px-8 py-4 whitespace-nowrap">{equb_type}</td>
+    <td className="px-8 py-4 whitespace-nowrap">{equb_amount}</td>
+    <td className="px-8 py-4 whitespace-nowrap">{equb_round}</td>
+    <td className="px-8 py-4 whitespace-nowrap">{equb_starting_date}</td>
+    <td className="px-8 py-4 whitespace-nowrap">
+      <div onClick={toggleSenderDetails} className="cursor-pointer hover:text-purple-800 hover:text-lg">
+        {sender ? `From ${sender.first_name} ${sender.last_name}` : 'Loading...'}
         {showSenderDetails && <SenderDetails senderId={sender_id} />}
       </div>
-      <p className={`absolute right-[20px] font-semibold ${((approvalStatus==='Approved')&& 'text-green-500')||((approvalStatus==='Declined')&&'text-red-500')}`}  >
-  {approvalStatus === 'Approved' && 'Approved ✔'}
-  {approvalStatus === 'Declined' && 'Declined ✖'}
-  {approvalStatus === 'Pending' && 'Pending ⌛'}
-      </p>
-      
+    </td>
+    <td className={`px-6 py-4 whitespace-nowrap font-semibold ${((approvalStatus === 'Approved') && 'text-green-500') || ((approvalStatus === 'Declined') && 'text-red-500')}`}>
+      {approvalStatus === 'Approved' && 'Approved ✔'}
+      {approvalStatus === 'Declined' && 'Declined ✖'}
+      {approvalStatus === 'Pending' && 'Pending ⌛'}
+    </td>
+    <td className="px-6 py-4 whitespace-nowrap">
       {(approvalStatus !== 'Approved' && approvalStatus !== 'Declined') && (
         <div className="buttons flex justify-between items-center w-full px-10">
-          <button  onClick={() => handleApprovalStatus('Approved')} className=" bg-green-500 text-white rounded-lg shadow-md shadow-black p-1 hover:bg-green-700 w-[75px] bottom-[10px]">Approve</button>
-          <button  onClick={() => handleApprovalStatus('Declined')} className=" bg-pink-700 text-white rounded-lg shadow-md shadow-black p-1 hover:bg-pink-600 w-[75px] bottom-[10px]">Decline</button>
+          <button onClick={() => handleApprovalStatus('Approved')} className="bg-green-500 text-white rounded-lg shadow-md shadow-black p-1 hover:bg-green-700 w-[75px]">Approve</button>
+          <button onClick={() => handleApprovalStatus('Declined')} className="bg-pink-700 text-white rounded-lg shadow-md shadow-black p-1 hover:bg-pink-600 w-[75px]">Decline</button>
         </div>
       )}
       {(approvalStatus === 'Approved' || approvalStatus === 'Declined') && (
         <button
-          className="bg-red-600 text-white justify-self-center rounded-lg shadow-md shadow-black p-1 hover:bg-red-700 w-[75px] bottom-[10px]"
+          className="bg-red-600 text-white justify-self-center rounded-lg shadow-md shadow-black p-1 hover:bg-red-700 w-[75px]"
           onClick={handleDelete}
         >
           Delete
         </button>
       )}
-    </div>
-  );
+    </td>
+  </tr>  );
 }
 
 export default EqubRequests;

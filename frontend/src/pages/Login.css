@@ -25,7 +25,7 @@ form.login {
     box-sizing: border-box;
   }
   form button {
-    background: var(--primary);
+    /* background: var(--primary); */
     border: 0;
     color: #fff;
     padding: 10px;

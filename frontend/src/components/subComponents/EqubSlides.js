@@ -8,7 +8,7 @@ function EqubSlides(props) {
   const [joinRequestSent, setJoinRequestSent] = useState(false);
   const [isMember, setIsMember] = useState(false);
 
-  
+  console.log('SLIDES TIME',props.starting_date);
   const formattedStartingDate = format(
     new Date(props.starting_date), // Assuming props.starting_date is a valid date string
     'MMMM d, yyyy' // Customize the date format as needed
@@ -55,6 +55,7 @@ function EqubSlides(props) {
   };
   return (
     // equb_id as a key for each equbs
+  
     <div className="equb-slide shadow-md  shadow-slate-600 w-[370px] h-[220px] rounded-sm flex p-3 items-center justify-between relative bg-white">
       <img src={props.img} alt="Equb" className="w-[170px] h-[170px] rounded-full" />
       <div className="equb-description p-1 ">
@@ -64,17 +65,23 @@ function EqubSlides(props) {
         <p className="equb-round m-0">max {props.max_round} round</p>
         <p className="equb-strting-date m-0">starts at {formattedStartingDate}</p>
         {!isMember && !joinRequestSent && (
-          <button
-            onClick={handleJoin}
-            className="absolute bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-1 transition-colors delay-100 hover:bg-fuchsia-600 w-[60px] bottom-[10px]"
-          >
-            Join
-          </button>
+          props.members.length === props.max_round ? (
+            <p className="m-0 text-fuchsia-700">Started</p>
+          ) : (
+            <button
+              onClick={handleJoin}
+              className="absolute bg-fuchsia-800 text-white rounded-lg shadow-md shadow-black p-1 transition-colors delay-100 hover:bg-fuchsia-600 w-[60px] bottom-[10px]"
+            >
+              Join
+            </button>
+          )
         )}
+
         {isMember && <p className="m-0 text-fuchsia-700">You are a member</p>}
         {joinRequestSent && <p className="m-0 text-lime-500">Join request sent</p>}
       </div>
     </div>
+
   );
 }
 

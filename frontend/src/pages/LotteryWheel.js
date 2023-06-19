@@ -90,7 +90,7 @@ export class LotteryWheel extends Component {
             <div className="imageBox">
             </div>
             <h2 className="titleWin text-fuchsia-700 flex items-center gap-2">
-            {user.firstname===candidates[1] ? "CONGRATULATIONS!!! YOU HAVE WON THIS ROUND" :"THE WINNER OF THIS ROUND IS"} <p className="text-2xl ">{this.state.show}!!!</p> 
+            {user.firstname===candidates[1] ? `CONGRATULATIONS!!! YOU HAVE WON THIS ROUND ${<p className="text-2xl ">{this.state.show}!!!</p>} Please visit the admin's office to fulfill some legality issues.` :"THE WINNER OF THIS ROUND IS"} <p className="text-2xl ">{this.state.show}!!!</p> 
             </h2>
             <div className="closeContainer">
               <button
